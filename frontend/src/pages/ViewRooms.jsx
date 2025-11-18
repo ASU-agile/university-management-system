@@ -5,6 +5,9 @@ const ViewRooms = () => {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [bookingMessage, setBookingMessage] = useState("");
+  const [selectedDate, setSelectedDate] = useState(""); // date picker
+  const [startTime, setStartTime] = useState("09:00");  // start time picker
+  const [endTime, setEndTime] = useState("10:00");      // end time picker
 
   // Fetch rooms from backend
   const fetchRooms = async () => {
@@ -16,22 +19,27 @@ const ViewRooms = () => {
 
   useEffect(() => {
     fetchRooms();
+    // Default booking date: today
+    setSelectedDate(new Date().toISOString().split("T")[0]);
   }, []);
 
   const handleBook = async (roomId) => {
-    // For now, we will use a dummy user_id
     const bookingData = {
       room_id: roomId,
-      user_id: 1, // replace with logged-in user later
-      booking_date: new Date().toISOString().split("T")[0],
-      start_time: "09:00",
-      end_time: "10:00",
+      user_id: 1, // dummy user for now
+      booking_date: selectedDate,
+      start_time: startTime,
+      end_time: endTime,
     };
 
     const response = await bookRoom(bookingData);
+
+    // Display backend message
     if (response.message) {
-      setBookingMessage(`Room ${roomId} booked successfully!`);
-      fetchRooms(); // refresh list to update availability
+      setBookingMessage(response.message);
+      fetchRooms(); // refresh room list
+    } else if (response.error) {
+      setBookingMessage(response.error);
     } else {
       setBookingMessage("Booking failed. Try again.");
     }
@@ -45,7 +53,38 @@ const ViewRooms = () => {
   return (
     <div style={{ padding: "20px" }}>
       <h2>Available Rooms</h2>
+
+      {/* Booking controls */}
+      <div style={{ marginBottom: "10px" }}>
+        <label>
+          Date:{" "}
+          <input
+            type="date"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+          />
+        </label>{" "}
+        <label>
+          Start Time:{" "}
+          <input
+            type="time"
+            value={startTime}
+            onChange={(e) => setStartTime(e.target.value)}
+          />
+        </label>{" "}
+        <label>
+          End Time:{" "}
+          <input
+            type="time"
+            value={endTime}
+            onChange={(e) => setEndTime(e.target.value)}
+          />
+        </label>
+      </div>
+
+      {/* Success/Error message */}
       {bookingMessage && <p>{bookingMessage}</p>}
+
       <table border="1" cellPadding="10">
         <thead>
           <tr>
