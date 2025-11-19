@@ -20,7 +20,6 @@ function Login() {
 
   return (
     <div className="app-container">
-      <div>
       <h2>Login</h2>
       <form onSubmit={handleLogin}>
         <input
@@ -43,7 +42,6 @@ function Login() {
         Don't have an account? <Link to="/register">Register here</Link>
       </p>
       <p>{message}</p>
-      </div>
     </div>
   );
 }
