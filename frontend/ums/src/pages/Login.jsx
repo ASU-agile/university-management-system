@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -11,7 +12,11 @@ function Login() {
     e.preventDefault();
     try {
       const { data } = await axiosInstance.post('/auth/login', { email, password });
-      setMessage(`Welcome ${data.user.email}`);
+
+      // Redirect to dashboard and pass user email
+      navigate('/dashboard', {
+        state: { email: data.user.email }
+      });
     } catch (err) {
       setMessage('Login failed');
       console.error('Login error:', err);
@@ -21,6 +26,7 @@ function Login() {
   return (
     <div className="app-container">
       <h2>Login</h2>
+
       <form onSubmit={handleLogin}>
         <input
           type="email"
@@ -29,6 +35,7 @@ function Login() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+
         <input
           type="password"
           placeholder="Password"
@@ -36,11 +43,14 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
         <button type="submit">Login</button>
       </form>
+
       <p>
         Don't have an account? <Link to="/register">Register here</Link>
       </p>
+
       <p>{message}</p>
     </div>
   );
