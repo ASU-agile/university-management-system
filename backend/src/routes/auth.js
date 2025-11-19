@@ -24,4 +24,29 @@ router.post('/register', async (req, res) => {
   }
 });
 
+// LOGIN ROUTE
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error('Login error:', error.message);
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.json({
+      message: 'User logged in successfully!',
+      session: data.session, // contains access token etc.
+      user: data.user,
+    });
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 module.exports = router;
