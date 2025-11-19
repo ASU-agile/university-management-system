@@ -19,7 +19,8 @@ function Register() {
   };
 
   return (
-    <div>
+    <div className="app-container">
+      <div>
       <h2>Register</h2>
       <form onSubmit={handleRegister}>
         <input
@@ -42,6 +43,7 @@ function Register() {
         Already have an account? <Link to="/">Login here</Link>
       </p>
       <p>{message}</p>
+    </div>
     </div>
   );
 }
