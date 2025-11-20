@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 
 function Login() {
@@ -13,10 +13,16 @@ function Login() {
     try {
       const { data } = await axiosInstance.post('/auth/login', { email, password });
 
-      // Redirect to dashboard and pass user email
-      navigate('/dashboard', {
-        state: { email: data.user.email }
-      });
+      // 1️⃣ Store user in localStorage for persistent login
+      localStorage.setItem('user', JSON.stringify(data.user));
+
+      // 2️⃣ Redirect based on role
+      if (data.user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/dashboard');
+      }
+
     } catch (err) {
       setMessage('Login failed');
       console.error('Login error:', err);
@@ -46,10 +52,6 @@ function Login() {
 
         <button type="submit">Login</button>
       </form>
-
-      <p>
-        Don't have an account? <Link to="/register">Register here</Link>
-      </p>
 
       <p>{message}</p>
     </div>

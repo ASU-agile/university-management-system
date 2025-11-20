@@ -1,5 +1,6 @@
 import React from 'react';
 import CourseCard from '../components/CourseCard';
+import { useNavigate } from 'react-router-dom';
 
 const DUMMY_COURSES = [
   { id: 1, title: 'Basic Science', code: 'ASUX12', semester: 'Selected Topics in...', color: '#1E90FF' },
@@ -8,9 +9,10 @@ const DUMMY_COURSES = [
   { id: 4, title: 'Software Engineering', code: 'SE401', semester: 'Spring 2026', color: '#6A5ACD' },
 ];
 
-function Dashboard() {
+function AdminDashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
-  const userName = user?.email.split('@')[0].replace('.', ' ') || 'User';
+  const userName = user?.email.split('@')[0].replace('.', ' ') || 'Admin';
+  const navigate = useNavigate();
 
   return (
     <div className="dashboard-container">
@@ -22,6 +24,7 @@ function Dashboard() {
           <li>Courses</li>
           <li>Staff</li>
           <li>Facilities</li>
+          <li>Register Users</li> {/* new link */}
           <li>Settings</li>
         </ul>
       </aside>
@@ -62,4 +65,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default AdminDashboard;
