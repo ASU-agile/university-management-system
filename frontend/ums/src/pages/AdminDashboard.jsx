@@ -19,13 +19,13 @@ function AdminDashboard() {
       <aside className="sidebar">
         <h2 className="sidebar-title">UMS</h2>
         <ul>
-          <li>Dashboard</li>
-          <li>Students</li>
-          <li>Courses</li>
-          <li>Staff</li>
-          <li>Facilities</li>
-          <li>Register Users</li> {/* new link */}
-          <li>Settings</li>
+          <li onClick={() => navigate('/admin/dashboard')}>Dashboard</li>
+          <li onClick={() => navigate('/students')}>Students</li>
+          <li onClick={() => navigate('/courses')}>Courses</li>
+          <li onClick={() => navigate('/staff')}>Staff</li>
+          <li onClick={() => navigate('/facilities')}>Facilities</li>
+          <li onClick={() => navigate('/register')}>Register Users</li> {/* <-- navigation works now */}
+          <li onClick={() => navigate('/settings')}>Settings</li>
         </ul>
       </aside>
 
