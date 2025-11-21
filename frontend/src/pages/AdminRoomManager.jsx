@@ -1,4 +1,4 @@
-
+//frontend/src/pages/AdminRoomManager.jsx
 import axios from "axios";
 import "./AdminRoomManager.css";
 import React, { useState, useEffect } from "react";
@@ -103,7 +103,8 @@ export default function AdminRoomManager() {
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div style={{ padding: "20px", textAlign: "center" }}>
+
       <h2>Admin Room Manager</h2>
       <button onClick={() => setShowAddModal(true)}>Add Room</button>
 
