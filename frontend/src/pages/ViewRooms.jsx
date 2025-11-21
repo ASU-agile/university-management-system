@@ -1,3 +1,4 @@
+//frontend/src/pages/ViewRooms.jsx
 import React, { useEffect, useState } from "react";
 import { getRooms, bookRoom } from "../api/rooms";
 
