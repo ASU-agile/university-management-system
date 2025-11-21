@@ -1,0 +1,102 @@
+
+.container {
+  padding: 20px;
+  font-family: inherit;
+
+}
+
+body{
+    background-color: #e6ecf3;
+}
+
+h2 {
+  margin-bottom: 15px;
+}
+
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #4266b2;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+}
+
+
+.room-list-container table {
+  width: 800px;
+  border-collapse: separate;
+  background-color: #fff;
+  border-spacing: 0;
+  margin: auto;
+  overflow: hidden;
+  border-radius: 20px;
+  
+}
+
+.room-list-container th,
+.room-list-container td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  
+}
+
+.room-list-container th {
+  background-color: #4266b2;
+  color: #fff;
+}
+
+.room-list-container td button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #4266b2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.room-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.modal {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  z-index: 1000;
+  width: 300px; 
+  box-sizing: border-box;
+}
+
+.modal input {
+  display: block;    
+  width: 100%;     
+  padding: 8px;
+  margin: 10px 0;  
+  box-sizing: border-box;
+  border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.modal button {
+  margin-top: 10px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #4266b2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
