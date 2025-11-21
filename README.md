@@ -31,7 +31,7 @@ root/
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/ASU-agile/university-management-system.git
-cd <repo-folder>
+cd university-management-system
 git checkout feature/sprint1
 
 ### 2. Open the Project in VS Code
