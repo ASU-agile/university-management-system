@@ -11,16 +11,30 @@ const ViewRooms = () => {
   const [endTime, setEndTime] = useState("10:00");
 
   const fetchRooms = async () => {
-    setLoading(true);
-    const data = await getRooms();
+  console.log("➡️ Fetching rooms...");
+  setLoading(true);
+
+  try {
+    const data = await getRooms(selectedDate, startTime, endTime);
+    console.log("⬅️ Rooms response:", data);
     setRooms(data);
-    setLoading(false);
-  };
+  } catch (err) {
+    console.error("❌ Error fetching rooms:", err);
+  }
+
+  setLoading(false);
+};
+
+
 
   useEffect(() => {
-    fetchRooms();
-    setSelectedDate(new Date().toISOString().split("T")[0]);
-  }, []);
+  setSelectedDate(new Date().toISOString().split("T")[0]);
+}, []);
+
+  useEffect(() => {
+  if (selectedDate) fetchRooms();
+}, [selectedDate, startTime, endTime]);
+
 
   const handleBook = async (roomId) => {
     const bookingData = {

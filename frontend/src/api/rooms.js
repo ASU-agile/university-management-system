@@ -1,16 +1,13 @@
-//frontend/src/api/rooms.js
+// frontend/src/api/rooms.js
 import axios from "axios";
 
 const BASE_URL = "http://localhost:5000/api";
 
-export const getRooms = async () => {
-  try {
-    const { data } = await axios.get(`${BASE_URL}/rooms`);
-    return data;
-  } catch (error) {
-    console.error("Error fetching rooms:", error);
-    return [];
-  }
+export const getRooms = async (booking_date, start_time, end_time) => {
+  const res = await fetch(
+    `${BASE_URL}/rooms?booking_date=${booking_date}&start_time=${start_time}&end_time=${end_time}`
+  );
+  return res.json();
 };
 
 export const bookRoom = async (bookingData) => {

@@ -4,24 +4,50 @@ import { supabase } from "../db/supabase.js";
 // GET /api/rooms
 export const getRooms = async (req, res) => {
   try {
-    const { data, error } = await supabase
+    const { booking_date, start_time, end_time } = req.query;
+
+    // Fetch all rooms
+    const { data: rooms, error: roomError } = await supabase
       .from("rooms")
       .select(`
         id,
         room_no,
         room_capacity,
-        room_availability,
         buildings(building_name)
       `);
 
-    if (error) throw error;
+    if (roomError) throw roomError;
 
-    res.status(200).json(data);
+    // Fetch bookings only if date/time filters provided
+    let bookings = [];
+    if (booking_date && start_time && end_time) {
+      const { data: bookingData, error: bookingError } = await supabase
+        .from("bookings")
+        .select("*")
+        .eq("booking_date", booking_date)
+        .gte("end_time", start_time)
+        .lte("start_time", end_time);
+
+      if (bookingError) throw bookingError;
+      bookings = bookingData;
+    }
+
+    // Compute availability per room
+    const roomsWithAvailability = rooms.map((room) => {
+      const overlapping = bookings.some((b) => b.room_id === room.id);
+      return {
+        ...room,
+        room_availability: !overlapping,
+      };
+    });
+
+    res.status(200).json(roomsWithAvailability);
   } catch (err) {
     console.error("Error fetching rooms:", err.message);
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // POST /api/rooms/book
 export const bookRoom = async (req, res) => {
