@@ -66,39 +66,48 @@ const ViewRooms = () => {
       {/* Navigation */}
       <nav>
         <a href="/" className="App-link">Home</a>
-        <a href="/view-rooms" className="App-link">View Rooms</a>
+        {/*<a href="/view-rooms" className="App-link">View Rooms</a>*/}
       </nav>
 
       {/* Page title */}
       <h2>Available Rooms</h2>
 
       {/* Booking controls */}
-      <div className="booking-controls">
-        <label>
-          Date:{" "}
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-          />
-        </label>
-        <label>
-          Start Time:{" "}
-          <input
-            type="time"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-          />
-        </label>
-        <label>
-          End Time:{" "}
-          <input
-            type="time"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-          />
-        </label>
-      </div>
+        <div
+    className="booking-controls"
+    style={{ display: "flex", gap: "20px", alignItems: "center" }}
+  >
+    <label>
+      Date:{" "}
+      <input
+        type="date"
+        value={selectedDate}
+        onChange={(e) => setSelectedDate(e.target.value)}
+        style={{ border: "2px solid black", padding: "4px", borderRadius: "4px" }}
+      />
+    </label>
+
+    <label>
+      Start Time:{" "}
+      <input
+        type="time"
+        value={startTime}
+        onChange={(e) => setStartTime(e.target.value)}
+        style={{ border: "2px solid black", padding: "4px", borderRadius: "4px" }}
+      />
+    </label>
+
+    <label>
+      End Time:{" "}
+      <input
+        type="time"
+        value={endTime}
+        onChange={(e) => setEndTime(e.target.value)}
+        style={{ border: "2px solid black", padding: "4px", borderRadius: "4px" }}
+      />
+    </label>
+  </div>
+
 
       {/* Messages */}
       {bookingMessage && <p className="booking-message">{bookingMessage}</p>}
