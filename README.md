@@ -60,8 +60,8 @@ http://localhost:15731
 ```
 Open it in your browser.
 
-##**Deployment**
-###**Backend**
+## Deployment
+### Backend
 
 The backend is deployed on Railway. All changes merged into the dev branch are automatically deployed.
 
