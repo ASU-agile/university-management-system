@@ -15,7 +15,6 @@ app.use(express.json());
 // routes
 app.use("/api/rooms", roomsRoute);
 app.use("/api/admin-rooms", adminRoomRoute);
-app.use("/api/test", testRoutes);
 app.use("/auth", authRoutes);   // mount auth
 
 // root test endpoint
