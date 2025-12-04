@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import roomsRoute from "./src/routes/rooms.js";
-import testRoutes from "./src/routes/tests.routes.js";
 import adminRoomRoute from "./src/routes/adminRoom.js";
 import authRoutes from "./src/routes/auth.js";  // import your auth route
 
