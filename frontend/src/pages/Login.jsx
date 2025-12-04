@@ -21,6 +21,8 @@ function Login() {
       // 2️⃣ Redirect based on role
       if (data.user.role === 'admin') {
         navigate('/admin/dashboard');
+      } else if (data.user.role === 'staff') {
+        navigate('/staffdashboard');
       } else {
         navigate('/dashboard');
       }

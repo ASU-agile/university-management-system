@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
 
+const DUMMY_COURSES = [
+  { id: 1, title: 'Basic Science', code: 'ASUX12', semester: 'Selected Topics in...', color: '#3299ffff' },
+  { id: 2, title: 'Comp. & Systems Eng.', code: 'CSE233', semester: 'Agile Software Engin...', color: '#3CB371' },
+  { id: 3, title: 'Database Systems', code: 'IT320', semester: 'Fall 2025', color: '#DAA520' },
+  { id: 4, title: 'Software Engineering', code: 'SE401', semester: 'Spring 2026', color: '#6A5ACD' },
+];
 
-function Dashboard() {
+function StudentCourses() {
   const user = JSON.parse(localStorage.getItem('user'));
   const userName = user?.email.split('@')[0].replace('.', ' ') || 'User';
   const navigate = useNavigate();
@@ -18,7 +24,6 @@ function Dashboard() {
           <li>Training</li>
           <li>Archive</li>
           <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
-          <li>Fees</li>
           <li>Settings</li>
         </ul>
       </aside>
@@ -28,7 +33,7 @@ function Dashboard() {
           <h2 className="welcome-message">
             Welcome, {userName.charAt(0).toUpperCase() + userName.slice(1)}!
           </h2>
-          <button
+          <button 
             className="customize-button"
             onClick={() => {
               localStorage.removeItem('user');
@@ -39,31 +44,24 @@ function Dashboard() {
           </button>
         </header>
 
-        <section>
-          <h3></h3>
-          <div className="student-actions-grid">
-            <div id="studentgpa" style={{ padding: "25px"}}>
-              <span className="icon" style={{ fontSize: "40px" }}>📊</span>
-              <h4 style={{ fontSize: "24px", margin: "10px 0" }}>GPA</h4>
-              <p style={{ fontSize: "20px", fontWeight: "600" }}>3.5</p>
-            </div>
-
-            <div id="studenttraining" style={{ padding: "25px"}}>
-              <span className="icon" style={{ fontSize: "40px" }}>📝</span>
-              <h4 style={{ fontSize: "24px", margin: "10px 0" }}>Training Weeks</h4>
-              <p style={{ fontSize: "20px", fontWeight: "600" }}>12 / 14</p>
-            </div>
-
-            <div id="studentwarning" style={{ padding: "25px"}}>
-              <span className="icon" style={{ fontSize: "40px" }}>⚠️</span>
-              <h4 style={{ fontSize: "24px", margin: "10px 0" }}>Warnings</h4>
-              <p style={{ fontSize: "20px", fontWeight: "600" }}>0</p>
-            </div>
+        <section className="course-preview-section">
+          <h3>Your Current Courses</h3>
+          <div className="course-preview-grid">
+            {DUMMY_COURSES.map(course => (
+              <CourseCard 
+                key={course.id} 
+                title={course.title} 
+                code={course.code}
+                semester={course.semester} 
+                color={course.color}
+              />
+            ))}
           </div>
+          <button className="view-all-button">View All Courses</button>
         </section>
       </main>
     </div>
   );
 }
 
-export default Dashboard;
+export default StudentCourses;
