@@ -20,10 +20,12 @@ Currently, the **Facilities Module** is implemented.
 
 ## Project Structure
 ```
+
 root/
  ├── backend/      # Express backend
  ├── frontend/     # Vite + React frontend 
  └── README.md
+
 ```
 
 ## Setup Instructions
@@ -32,7 +34,7 @@ root/
 ```bash
 git clone https://github.com/ASU-agile/university-management-system.git
 cd university-management-system
-git checkout feature/sprint1
+git checkout dev
 
 ### 2. Open the Project in VS Code
 Open the folder normally.
@@ -58,4 +60,9 @@ http://localhost:15731
 ```
 Open it in your browser.
 
+##**Deployment**
+###**Backend**
 
+The backend is deployed on Railway. All changes merged into the dev branch are automatically deployed.
+
+Live API URL: [University Management System](https://ums-production-7f8b.up.railway.app/)
