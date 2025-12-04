@@ -2,14 +2,6 @@ import React, { useState, useEffect } from "react";
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
 
-
-const DUMMY_COURSES = [
-  { id: 1, title: 'Basic Science', code: 'ASUX12', semester: 'Selected Topics in...', color: '#1E90FF' },
-  { id: 2, title: 'Comp. & Systems Eng.', code: 'CSE233', semester: 'Agile Software Engin...', color: '#3CB371' },
-  { id: 3, title: 'Database Systems', code: 'IT320', semester: 'Fall 2025', color: '#DAA520' },
-  { id: 4, title: 'Software Engineering', code: 'SE401', semester: 'Spring 2026', color: '#6A5ACD' },
-];
-
 function AdminDashboard() {
   const user = JSON.parse(localStorage.getItem('user'));
   const userName = user?.email.split('@')[0].replace('.', ' ') || 'Admin';
@@ -24,8 +16,6 @@ function AdminDashboard() {
           <li onClick={() => navigate('/students')}>Students</li>
           <li onClick={() => navigate('/courses')}>Courses</li>
           <li onClick={() => navigate('/staff')}>Staff</li>
-          <li onClick={() => navigate('/adminfacilities')}>Facilities</li>
-          <li onClick={() => navigate('/register')}>Register Users</li> {/* <-- navigation works now */}
           <li onClick={() => navigate('/settings')}>Settings</li>
         </ul>
       </aside>
@@ -33,9 +23,9 @@ function AdminDashboard() {
       <main className="main-content">
         <header className="topbar">
           <h2 className="welcome-message">
-            Welcome, {userName.charAt(0).toUpperCase() + userName.slice(1)}!
+            Welcome to your dashboard, admin {userName.charAt(0).toUpperCase() + userName.slice(1)}!
           </h2>
-          <button 
+          <button
             className="customize-button"
             onClick={() => {
               localStorage.removeItem('user');
@@ -46,20 +36,27 @@ function AdminDashboard() {
           </button>
         </header>
 
-        <section className="course-preview-section">
-          <h3>Your Current Courses</h3>
-          <div className="course-preview-grid">
-            {DUMMY_COURSES.map(course => (
-              <CourseCard 
-                key={course.id} 
-                title={course.title} 
-                code={course.code}
-                semester={course.semester} 
-                color={course.color}
-              />
-            ))}
+        <section>
+          <h3>What do you want to do?</h3>
+          <div className="actions-grid">
+            <div className="action-card" onClick={() => navigate('/register')}>
+              <span className="icon">👤</span>
+              <h4>Register users</h4>
+              <p>Create and manage user accounts.</p>
+            </div>
+
+            <div className="action-card" onClick={() => navigate('/courses')}>
+              <span className="icon">🎓</span>
+              <h4>Add classes</h4>
+              <p>Create course content for your students.</p>
+            </div>
+
+            <div className="action-card" onClick={() => navigate('/adminfacilities')}>
+              <span className="icon">🏫</span>
+              <h4>Manage rooms</h4>
+              <p>Add and manage halls, sections, and labs.</p>
+            </div>
           </div>
-          <button className="view-all-button">View All Courses</button>
         </section>
       </main>
     </div>

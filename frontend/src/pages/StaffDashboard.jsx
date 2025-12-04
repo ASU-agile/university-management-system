@@ -15,10 +15,9 @@ function Dashboard() {
         <ul>
           <li onClick={() => navigate('/dashboard')}>Dashboard</li>
           <li onClick={() => navigate('/studentcourses')}>Courses</li>
-          <li>Training</li>
+          <li>My Exams</li>
           <li>Archive</li>
           <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
-          <li>Fees</li>
           <li>Settings</li>
         </ul>
       </aside>
@@ -40,24 +39,24 @@ function Dashboard() {
         </header>
 
         <section>
-          <h3></h3>
-          <div className="student-actions-grid">
-            <div id="studentgpa" style={{ padding: "25px"}}>
-              <span className="icon" style={{ fontSize: "40px" }}>📊</span>
-              <h4 style={{ fontSize: "24px", margin: "10px 0" }}>GPA</h4>
-              <p style={{ fontSize: "20px", fontWeight: "600" }}>3.5</p>
+        <h3>What do you want to do?</h3>
+          <div className="actions-grid">
+            <div className="action-card" onClick={() => navigate('/register')}>
+              <span className="icon">👤</span>
+              <h4>Manage students</h4>
+              <p>Give them an F and ruin their lives.</p>
             </div>
 
-            <div id="studenttraining" style={{ padding: "25px"}}>
-              <span className="icon" style={{ fontSize: "40px" }}>📝</span>
-              <h4 style={{ fontSize: "24px", margin: "10px 0" }}>Training Weeks</h4>
-              <p style={{ fontSize: "20px", fontWeight: "600" }}>12 / 14</p>
+            <div className="action-card" onClick={() => navigate('/courses')}>
+              <span className="icon">🎓</span>
+              <h4>Add classes</h4>
+              <p>Create course content for your students.</p>
             </div>
 
-            <div id="studentwarning" style={{ padding: "25px"}}>
-              <span className="icon" style={{ fontSize: "40px" }}>⚠️</span>
-              <h4 style={{ fontSize: "24px", margin: "10px 0" }}>Warnings</h4>
-              <p style={{ fontSize: "20px", fontWeight: "600" }}>0</p>
+            <div className="action-card" onClick={() => navigate('/adminfacilities')}>
+              <span className="icon">🏫</span>
+              <h4>Make exams</h4>
+              <p>Make it so hard that the suicide rate in Egypt spikes.</p>
             </div>
           </div>
         </section>

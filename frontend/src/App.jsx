@@ -8,6 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import Register from "./pages/Register";   
 import ViewRooms from "./pages/ViewRooms";
+import StaffDashboard from "./pages/StaffDashboard";
+import StudentCourses from "./pages/StudentCourses";
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path="/register" element={<Register />} />  
         <Route path="/adminfacilities" element={<AdminRoomManager />} /> 
         <Route path="/stafffacilities" element={<ViewRooms />} />
+        <Route path="/staffdashboard" element={<StaffDashboard />}/>
+        <Route path="/studentcourses" element={<StudentCourses />}/>
       </Routes>
     </Router>
   );
