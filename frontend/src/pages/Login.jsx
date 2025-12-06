@@ -11,27 +11,29 @@ function Login() {
   const [message, setMessage] = useState('');
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axiosInstance.post('http://localhost:5000/auth/login', { email, password });
+  e.preventDefault();
+  try {
+    // ✅ Use axiosInstance which points to VITE_API_URL
+    const { data } = await axiosInstance.post('/auth/login', { email, password });
 
-      // 1️⃣ Store user in localStorage for persistent login
-      localStorage.setItem('user', JSON.stringify(data.user));
+    // Store user in localStorage for persistent login
+    localStorage.setItem('user', JSON.stringify(data.user));
 
-      // 2️⃣ Redirect based on role
-      if (data.user.role === 'admin') {
-        navigate('/admin/dashboard');
-      } else if (data.user.role === 'staff') {
-        navigate('/staffdashboard');
-      } else {
-        navigate('/dashboard');
-      }
-
-    } catch (err) {
-      setMessage('Login failed');
-      console.error('Login error:', err);
+    // Redirect based on role
+    if (data.user.role === 'admin') {
+      navigate('/admin/dashboard');
+    } else if (data.user.role === 'staff') {
+      navigate('/staffdashboard');
+    } else {
+      navigate('/dashboard');
     }
-  };
+
+  } catch (err) {
+    setMessage('Login failed');
+    console.error('Login error:', err);
+  }
+};
+
 
   return (
     <div className="app-container">

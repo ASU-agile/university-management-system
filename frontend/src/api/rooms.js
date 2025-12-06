@@ -1,7 +1,8 @@
 // frontend/src/api/rooms.js
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/api";
+// Use environment variable for backend URL
+const BASE_URL = import.meta.env.VITE_API_URL + "/api";
 
 export const getRooms = async (booking_date, start_time, end_time) => {
   const res = await fetch(

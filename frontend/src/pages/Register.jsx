@@ -8,21 +8,23 @@ function Register() {
   const [role, setRole] = useState('student'); // default
   const [message, setMessage] = useState('');
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    try {
-      const { data } = await axiosInstance.post('http://localhost:5000/auth/register', { 
-        email, 
-        password,
-        role                // <-- IMPORTANT!
-      });
+ const handleRegister = async (e) => {
+  e.preventDefault();
+  try {
+    // ✅ Use axiosInstance, which already points to VITE_API_URL
+    const { data } = await axiosInstance.post('/auth/register', { 
+      email, 
+      password,
+      role // important!
+    });
 
-      setMessage('Registration successful! You can now login.');
-    } catch (err) {
-      console.error('Registration error:', err);
-      setMessage('Registration failed');
-    }
-  };
+    setMessage('Registration successful! You can now login.');
+  } catch (err) {
+    console.error('Registration error:', err);
+    setMessage('Registration failed');
+  }
+};
+
 
   return (
   <div className="app-container">
