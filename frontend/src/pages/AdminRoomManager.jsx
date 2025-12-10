@@ -25,7 +25,7 @@ export default function AdminRoomManager() {
 
   const fetchRooms = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin-rooms");
+      const res = await axios.get(import.meta.env.VITE_API_URL + "/api/admin-rooms");
       setRooms(res.data);
     } catch (err) {
       console.error(err);
