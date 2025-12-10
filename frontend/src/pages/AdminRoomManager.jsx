@@ -3,7 +3,7 @@ import "./AdminRoomManager.css";
 import React, { useState, useEffect } from "react";
 
 export default function AdminRoomManager() {
-  const API = import.meta.env.VITE_API_URL; // Use same API for ALL requests
+  const API = import.meta.env.VITE_API_URL;
 
   const [rooms, setRooms] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -16,9 +16,9 @@ export default function AdminRoomManager() {
     floorNumber: "",
     roomCapacity: "",
     roomType: "",
-    availability: true,
   });
 
+  /* --------------------- FETCH ROOMS --------------------- */
   useEffect(() => {
     fetchRooms();
   }, []);
@@ -26,37 +26,50 @@ export default function AdminRoomManager() {
   const fetchRooms = async () => {
     try {
       const res = await axios.get(`${API}/api/admin-rooms`);
-      setRooms(res.data);
+
+      // Normalize returned data
+      const normalized = res.data.map((r) => ({
+        id: r.id,
+        roomNumber: r.room_no,
+        buildingId: r.building_id,
+        floorNumber: r.floorNumber,
+        roomCapacity: r.room_capacity,
+        roomType: r.roomType,
+        availability: r.room_availability,
+      }));
+
+      setRooms(normalized);
     } catch (err) {
       console.error("Error fetching rooms:", err);
     }
   };
+
+  /* --------------------- FORM HANDLERS --------------------- */
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const resetForm = () => {
+  const resetForm = () =>
     setForm({
       roomNumber: "",
       buildingId: "",
       floorNumber: "",
       roomCapacity: "",
       roomType: "",
-      availability: true,
     });
-  };
+
+  /* --------------------- ADD ROOM --------------------- */
 
   const handleAddRoom = async () => {
     try {
       await axios.post(`${API}/api/admin-rooms`, {
-        room_no: form.roomNumber,
-        building_id: form.buildingId,
+        roomNumber: form.roomNumber,
+        buildingId: form.buildingId,
         floorNumber: parseInt(form.floorNumber),
-        room_capacity: parseInt(form.roomCapacity),
+        roomCapacity: parseInt(form.roomCapacity),
         roomType: form.roomType,
-        room_availability: form.availability,
       });
 
       setShowAddModal(false);
@@ -67,16 +80,17 @@ export default function AdminRoomManager() {
     }
   };
 
+  /* --------------------- EDIT ROOM --------------------- */
+
   const handleEditRoom = (room) => {
     setCurrentRoom(room);
 
     setForm({
-      roomNumber: room.room_no,
-      buildingId: room.building_id,
+      roomNumber: room.roomNumber,
+      buildingId: room.buildingId,
       floorNumber: room.floorNumber || "",
-      roomCapacity: room.room_capacity,
+      roomCapacity: room.roomCapacity,
       roomType: room.roomType || "",
-      availability: room.room_availability,
     });
 
     setShowEditModal(true);
@@ -85,12 +99,11 @@ export default function AdminRoomManager() {
   const handleSaveEdit = async () => {
     try {
       await axios.put(`${API}/api/admin-rooms/${currentRoom.id}`, {
-        room_no: form.roomNumber,
-        building_id: form.buildingId,
+        roomNumber: form.roomNumber,
+        buildingId: form.buildingId,
         floorNumber: parseInt(form.floorNumber),
-        room_capacity: parseInt(form.roomCapacity),
+        roomCapacity: parseInt(form.roomCapacity),
         roomType: form.roomType,
-        room_availability: form.availability,
       });
 
       setShowEditModal(false);
@@ -102,6 +115,8 @@ export default function AdminRoomManager() {
     }
   };
 
+  /* --------------------- DELETE ROOM --------------------- */
+
   const handleDeleteRoom = async (room) => {
     if (!window.confirm("Are you sure you want to delete this room?")) return;
 
@@ -112,6 +127,8 @@ export default function AdminRoomManager() {
       console.error("Error deleting room:", err);
     }
   };
+
+  /* --------------------------- UI --------------------------- */
 
   return (
     <div style={{ padding: "20px", textAlign: "center" }}>
@@ -135,12 +152,12 @@ export default function AdminRoomManager() {
           <tbody>
             {rooms.map((room) => (
               <tr key={room.id}>
-                <td>{room.room_no}</td>
-                <td>{room.building_id}</td>
-                <td>{room.floorNumber || ""}</td>
-                <td>{room.room_capacity}</td>
-                <td>{room.roomType || ""}</td>
-                <td>{room.room_availability ? "Available" : "Unavailable"}</td>
+                <td>{room.roomNumber}</td>
+                <td>{room.buildingId}</td>
+                <td>{room.floorNumber}</td>
+                <td>{room.roomCapacity}</td>
+                <td>{room.roomType}</td>
+                <td>{room.availability ? "Available" : "Unavailable"}</td>
 
                 <td>
                   <button onClick={() => handleEditRoom(room)}>Edit</button>
@@ -157,11 +174,36 @@ export default function AdminRoomManager() {
         <div className="modal">
           <h3>Add Room</h3>
 
-          <input name="roomNumber" placeholder="Room Number" value={form.roomNumber} onChange={handleInputChange} />
-          <input name="buildingId" placeholder="Building ID" value={form.buildingId} onChange={handleInputChange} />
-          <input name="floorNumber" placeholder="Floor Number" value={form.floorNumber} onChange={handleInputChange} />
-          <input name="roomCapacity" placeholder="Capacity" value={form.roomCapacity} onChange={handleInputChange} />
-          <input name="roomType" placeholder="Room Type" value={form.roomType} onChange={handleInputChange} />
+          <input
+            name="roomNumber"
+            placeholder="Room Number"
+            value={form.roomNumber}
+            onChange={handleInputChange}
+          />
+          <input
+            name="buildingId"
+            placeholder="Building ID"
+            value={form.buildingId}
+            onChange={handleInputChange}
+          />
+          <input
+            name="floorNumber"
+            placeholder="Floor Number"
+            value={form.floorNumber}
+            onChange={handleInputChange}
+          />
+          <input
+            name="roomCapacity"
+            placeholder="Capacity"
+            value={form.roomCapacity}
+            onChange={handleInputChange}
+          />
+          <input
+            name="roomType"
+            placeholder="Room Type"
+            value={form.roomType}
+            onChange={handleInputChange}
+          />
 
           <div className="modal-buttons">
             <button onClick={handleAddRoom}>Add</button>
@@ -175,11 +217,36 @@ export default function AdminRoomManager() {
         <div className="modal">
           <h3>Edit Room</h3>
 
-          <input name="roomNumber" placeholder="Room Number" value={form.roomNumber} onChange={handleInputChange} />
-          <input name="buildingId" placeholder="Building ID" value={form.buildingId} onChange={handleInputChange} />
-          <input name="floorNumber" placeholder="Floor Number" value={form.floorNumber} onChange={handleInputChange} />
-          <input name="roomCapacity" placeholder="Capacity" value={form.roomCapacity} onChange={handleInputChange} />
-          <input name="roomType" placeholder="Room Type" value={form.roomType} onChange={handleInputChange} />
+          <input
+            name="roomNumber"
+            placeholder="Room Number"
+            value={form.roomNumber}
+            onChange={handleInputChange}
+          />
+          <input
+            name="buildingId"
+            placeholder="Building ID"
+            value={form.buildingId}
+            onChange={handleInputChange}
+          />
+          <input
+            name="floorNumber"
+            placeholder="Floor Number"
+            value={form.floorNumber}
+            onChange={handleInputChange}
+          />
+          <input
+            name="roomCapacity"
+            placeholder="Capacity"
+            value={form.roomCapacity}
+            onChange={handleInputChange}
+          />
+          <input
+            name="roomType"
+            placeholder="Room Type"
+            value={form.roomType}
+            onChange={handleInputChange}
+          />
 
           <div className="modal-buttons">
             <button onClick={handleSaveEdit}>Save</button>
