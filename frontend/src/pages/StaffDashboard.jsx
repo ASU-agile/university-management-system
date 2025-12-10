@@ -13,8 +13,8 @@ function Dashboard() {
       <aside className="sidebar">
         <h2 className="sidebar-title">UMS</h2>
         <ul>
-          <li onClick={() => navigate('/dashboard')}>Dashboard</li>
-          <li onClick={() => navigate('/studentcourses')}>Courses</li>
+          <li onClick={() => navigate('/staffdashboard')}>Dashboard</li>
+          <li>Courses</li>
           <li>My Exams</li>
           <li>Archive</li>
           <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
@@ -41,19 +41,19 @@ function Dashboard() {
         <section>
         <h3>What do you want to do?</h3>
           <div className="actions-grid">
-            <div className="action-card" onClick={() => navigate('/register')}>
+            <div className="action-card">
               <span className="icon">👤</span>
               <h4>Manage students</h4>
               <p>Give them an F and ruin their lives.</p>
             </div>
 
-            <div className="action-card" onClick={() => navigate('/courses')}>
+            <div className="action-card">
               <span className="icon">🎓</span>
               <h4>Add classes</h4>
               <p>Create course content for your students.</p>
             </div>
 
-            <div className="action-card" onClick={() => navigate('/adminfacilities')}>
+            <div className="action-card">
               <span className="icon">🏫</span>
               <h4>Make exams</h4>
               <p>Make it so hard that the suicide rate in Egypt spikes.</p>
