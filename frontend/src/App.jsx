@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import ViewRooms from "./pages/ViewRooms";
 import StaffDashboard from "./pages/StaffDashboard";
 import StudentCourses from "./pages/StudentCourses";
+import CoursePage from "./pages/CoursePage";
 
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <Route path="/stafffacilities" element={<ViewRooms />} />
         <Route path="/staffdashboard" element={<StaffDashboard />}/>
         <Route path="/studentcourses" element={<StudentCourses />}/>
+        <Route path="/course/:id" element={<CoursePage />} />
+
       </Routes>
     </Router>
   );
