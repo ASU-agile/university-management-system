@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminSubjectCard from "../components/AdminSubjectCard";
-import SubjectForm from "../pages/SubjectForm";
+import SubjectForm from "../components/SubjectForm";
 import api from "../api/axiosInstance"; // your existing axios instance
 
 function AdminSubjects() {
