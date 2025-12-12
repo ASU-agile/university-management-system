@@ -6,6 +6,8 @@ import roomsRoute from "./src/routes/rooms.js";
 import adminRoomRoute from "./src/routes/adminRoom.js";
 import authRoutes from "./src/routes/auth.js";  
 import coursesRoutes from "./src/routes/courses.js";
+import subjectsRoute from "./src/routes/subjects.js"; // << import subjects route
+
 
 dotenv.config();
 
@@ -16,8 +18,10 @@ app.use(express.json());
 // routes
 app.use("/api/rooms", roomsRoute);
 app.use("/api/admin-rooms", adminRoomRoute);
-app.use("/auth", authRoutes);   // mount auth
+  // mount auth
 app.use("/api/courses", coursesRoutes);
+app.use("/auth", authRoutes);
+app.use("/api/subjects", subjectsRoute); // << mount subjects route
 
 // root test endpoint
 app.get("/", (req, res) => res.send("University Management API is running."));
