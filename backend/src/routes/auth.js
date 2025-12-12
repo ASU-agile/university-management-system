@@ -131,5 +131,20 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+// --- GET ALL MAJORS ---
+router.get('/majors', async (req, res) => {
+  try {
+    const { data, error } = await supabase
+      .from('majors')
+      .select('id, major_name');
+
+    if (error) return res.status(400).json({ error: error.message });
+
+    res.json(data); // returns array of { id, major_name }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 export default router;
