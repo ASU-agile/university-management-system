@@ -36,6 +36,26 @@ router.post("/", async (req, res) => {
   }
 });
 
+// GET single subject by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { data, error } = await supabase
+      .from("subjects")
+      .select("*")
+      .eq("id", id)
+      .single(); // fetch only one row
+
+    if (error) throw error;
+    if (!data) return res.status(404).json({ message: "Subject not found" });
+
+    res.json(data);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error", error: err.message });
+  }
+});
+
 
 // GET ALL SUBJECTS (supports grouping)
 router.get("/", async (req, res) => {
@@ -81,19 +101,22 @@ router.patch("/:id", async (req, res) => {
     const { id } = req.params;
     const { subject_name, subject_code, credit_hours, major_id, is_elective } = req.body;
 
-    if (!subject_name || !subject_code || !credit_hours) {
-      return res.status(400).json({ message: "Name, code, and credit hours are required" });
+    // Validate required fields if they are being updated
+    if (subject_name === "" || subject_code === "" || credit_hours === "") {
+      return res.status(400).json({ message: "Name, code, and credit hours cannot be empty" });
     }
+
+    // Build update object dynamically, only include fields that exist in req.body
+    const updates = {};
+    if (subject_name !== undefined) updates.subject_name = subject_name;
+    if (subject_code !== undefined) updates.subject_code = subject_code;
+    if (credit_hours !== undefined) updates.credit_hours = credit_hours;
+    if (major_id !== undefined) updates.major_id = major_id;
+    if (is_elective !== undefined) updates.is_elective = is_elective;
 
     const { data, error } = await supabase
       .from("subjects")
-      .update({
-        subject_name,
-        subject_code,
-        credit_hours,
-        major_id: major_id || null,
-        is_elective: is_elective || false,
-      })
+      .update(updates)
       .eq("id", id)
       .select();
 
@@ -106,6 +129,7 @@ router.patch("/:id", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 // DELETE SUBJECT
 router.delete("/:id", async (req, res) => {

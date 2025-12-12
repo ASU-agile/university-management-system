@@ -4,7 +4,7 @@ function SubjectForm({ onClose, onSubmit, initialData }) {
   const [subjectName, setSubjectName] = useState(initialData?.subject_name || "");
   const [subjectCode, setSubjectCode] = useState(initialData?.subject_code || "");
   const [creditHours, setCreditHours] = useState(initialData?.credit_hours || "");
-  const [majorIdsInput, setMajorIdsInput] = useState(
+  const [majorIdInput, setMajorIdInput] = useState(
     initialData?.major_id ? initialData.major_id.toString() : ""
   );
   const [isElective, setIsElective] = useState(initialData?.is_elective || false);
@@ -12,24 +12,28 @@ function SubjectForm({ onClose, onSubmit, initialData }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Parse the string into an array of numbers
-    const major_ids = majorIdsInput
-      .split(",")
-      .map((id) => parseInt(id.trim()))
-      .filter((id) => !isNaN(id)); // remove any invalid entries
-
-    if (!subjectName || !subjectCode || !creditHours || major_ids.length === 0) {
-      alert("subject_name, subject_code, credit_hours, and major_ids (array) are required");
+    const major_id = parseInt(majorIdInput);
+    if (!subjectName || !subjectCode || !creditHours || isNaN(major_id)) {
+      alert("Name, code, credit hours, and major ID are required");
       return;
     }
 
-    onSubmit({
+    // Send object compatible with backend PATCH or POST
+    const payload = {
       subject_name: subjectName,
       subject_code: subjectCode,
       credit_hours: parseInt(creditHours),
-      major_ids,
       is_elective: isElective,
-    });
+    };
+
+    // Include major_id differently depending on create vs edit
+    if (initialData) {
+      payload.major_id = major_id; // PATCH uses major_id
+    } else {
+      payload.major_ids = [major_id]; // POST uses major_ids array
+    }
+
+    onSubmit(payload);
   };
 
   return (
@@ -65,11 +69,12 @@ function SubjectForm({ onClose, onSubmit, initialData }) {
         </label>
 
         <label>
-          Major IDs (comma separated):
+          Major ID:
           <input
-            value={majorIdsInput}
-            onChange={(e) => setMajorIdsInput(e.target.value)}
-            placeholder="e.g., 1,2,3"
+            type="number"
+            value={majorIdInput}
+            onChange={(e) => setMajorIdInput(e.target.value)}
+            placeholder="e.g., 1"
             required
           />
         </label>

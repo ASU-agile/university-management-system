@@ -22,7 +22,7 @@ function AdminSubjects() {
   }, []);
 
   const handleEdit = (subject) => {
-    navigate("/add-subject", { state: { subject } });
+  navigate("/edit-subject", { state: { subject } });
   };
 
   const handleDelete = async (id) => {
