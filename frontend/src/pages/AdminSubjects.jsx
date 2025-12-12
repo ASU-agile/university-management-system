@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminSubjectCard from "../components/AdminSubjectCard";
-import SubjectForm from "../components/SubjectForm";
 import api from "../api/axiosInstance"; // your existing axios instance
 
 function AdminSubjects() {
   const [subjects, setSubjects] = useState({ core: [], elective: [] });
-  const [showForm, setShowForm] = useState(false);
-  const [editingSubject, setEditingSubject] = useState(null);
+  const navigate = useNavigate();
 
   const fetchSubjects = async () => {
     try {
-      const res = await api.get("/api/subjects?group=true"); // <-- added /api
+      const res = await api.get("/api/subjects?group=true");
       setSubjects(res.data); // { core: [...], elective: [...] }
     } catch (err) {
       console.error(err);
@@ -23,14 +22,15 @@ function AdminSubjects() {
   }, []);
 
   const handleEdit = (subject) => {
-    setEditingSubject(subject);
-    setShowForm(true);
+    // Keep the inline edit if you want, you can later navigate to an edit page
+    // For now, you can implement inline edit logic here or navigate to edit form
+    alert("Edit functionality can be implemented here.");
   };
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this subject?")) return;
     try {
-      await api.delete(`/api/subjects/${id}`); // <-- added /api
+      await api.delete(`/api/subjects/${id}`);
       fetchSubjects();
     } catch (err) {
       console.error(err);
@@ -38,40 +38,12 @@ function AdminSubjects() {
     }
   };
 
-  const handleFormClose = () => {
-    setShowForm(false);
-    setEditingSubject(null);
-  };
-
-  const handleFormSubmit = async (formData) => {
-    try {
-      if (editingSubject) {
-        // update
-        await api.patch(`/api/subjects/${editingSubject.id}`, formData); // <-- added /api
-      } else {
-        // create
-        await api.post("/api/subjects", formData); // <-- added /api
-      }
-      handleFormClose();
-      fetchSubjects();
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Error saving subject");
-    }
-  };
-
   return (
     <div className="admin-subjects-page">
       <h2>Subjects Management</h2>
-      <button onClick={() => setShowForm(true)}>Add Subject</button>
 
-      {showForm && (
-        <SubjectForm
-          onClose={handleFormClose}
-          onSubmit={handleFormSubmit}
-          initialData={editingSubject}
-        />
-      )}
+      {/* Navigate to the separate Add Subject Form page */}
+      <button onClick={() => navigate("/add-subject")}>Add Subject</button>
 
       {/* Core Subjects */}
       <section>

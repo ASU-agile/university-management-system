@@ -45,7 +45,7 @@ function AdminDashboard() {
               <p>Create and manage user accounts.</p>
             </div>
 
-            <div className="action-card" onClick={() => navigate('/addsubject')}>
+            <div className="action-card" onClick={() => navigate('/add-subject')}>
               <span className="icon">🎓</span>
               <h4>Add classes</h4>
               <p>Create new courses</p>

@@ -20,7 +20,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/courses" element={<AdminSubjects />} /> 
-        <Route path="/addsubject" element={<AddSubjectForm />} /> {/* form-only page */}
+        <Route path="/add-subject" element={<AddSubjectForm />} /> {/* form-only page */}
         <Route path="/register" element={<Register />} />  
         <Route path="/adminfacilities" element={<AdminRoomManager />} /> 
         <Route path="/stafffacilities" element={<ViewRooms />} />
