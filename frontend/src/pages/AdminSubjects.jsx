@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AdminSubjectCard from "../components/AdminSubjectCard";
-import api from "../api/axiosInstance"; // your existing axios instance
+import api from "../api/axiosInstance";
 
 function AdminSubjects() {
   const [subjects, setSubjects] = useState({ core: [], elective: [] });
@@ -10,7 +10,7 @@ function AdminSubjects() {
   const fetchSubjects = async () => {
     try {
       const res = await api.get("/api/subjects?group=true");
-      setSubjects(res.data); // { core: [...], elective: [...] }
+      setSubjects(res.data);
     } catch (err) {
       console.error(err);
       alert("Error fetching subjects");
@@ -22,9 +22,7 @@ function AdminSubjects() {
   }, []);
 
   const handleEdit = (subject) => {
-    // Keep the inline edit if you want, you can later navigate to an edit page
-    // For now, you can implement inline edit logic here or navigate to edit form
-    alert("Edit functionality can be implemented here.");
+    navigate("/add-subject", { state: { subject } });
   };
 
   const handleDelete = async (id) => {
@@ -39,11 +37,35 @@ function AdminSubjects() {
   };
 
   return (
-    <div className="admin-subjects-page">
+    <div className="admin-subjects-page" style={{ padding: "20px" }}>
+      {/* Back to Dashboard button above the header */}
+      <div style={{ position: "relative", marginBottom: "20px" }}>
+      <span
+        onClick={() => navigate("/admin/dashboard")}
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          color: "#007bff",
+          textDecoration: "underline",
+          cursor: "pointer",
+          fontSize: "16px",
+        }}
+      >
+        ← Back to Dashboard
+      </span>
+    </div>
+
+
       <h2>Subjects Management</h2>
 
-      {/* Navigate to the separate Add Subject Form page */}
-      <button onClick={() => navigate("/add-subject")}>Add Subject</button>
+      {/* Add Subject Button */}
+      <button
+        onClick={() => navigate("/add-subject")}
+        style={{ marginBottom: "20px", padding: "10px 20px", fontSize: "16px" }}
+      >
+        Add Subject
+      </button>
 
       {/* Core Subjects */}
       <section>

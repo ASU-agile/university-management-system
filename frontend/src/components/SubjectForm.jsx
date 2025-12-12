@@ -85,9 +85,6 @@ function SubjectForm({ onClose, onSubmit, initialData }) {
 
         <div style={{ marginTop: "10px" }}>
           <button type="submit">{initialData ? "Update" : "Create"}</button>
-          <button type="button" onClick={onClose} style={{ marginLeft: 5 }}>
-            Cancel
-          </button>
         </div>
       </form>
     </div>
