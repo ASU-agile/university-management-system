@@ -3,9 +3,17 @@ import axios from 'axios';
 
 const axiosInstance = axios.create({
   baseURL: 'http://localhost:5000', // backend URL
-  headers: {
-    'Content-Type': 'application/json',
-  },
+});
+
+// Set default JSON header for most requests, but allow FormData to override
+axiosInstance.interceptors.request.use((config) => {
+  if (!(config.data instanceof FormData)) {
+    config.headers['Content-Type'] = 'application/json';
+  } else {
+    // For FormData, delete the default Content-Type so axios/browser can set multipart boundary
+    delete config.headers['Content-Type'];
+  }
+  return config;
 });
 
 export default axiosInstance;

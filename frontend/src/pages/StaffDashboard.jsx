@@ -13,9 +13,9 @@ function Dashboard() {
       <aside className="sidebar">
         <h2 className="sidebar-title">UMS</h2>
         <ul>
-          <li onClick={() => navigate('/dashboard')}>Dashboard</li>
-          <li onClick={() => navigate('/studentcourses')}>Courses</li>
-          <li>My Exams</li>
+          <li onClick={() => navigate('/staff/dashboard')}>Dashboard</li>
+          <li onClick={() => navigate('/staff/courses')}>My Courses</li>
+          <li>Training</li>
           <li>Archive</li>
           <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
           <li>Settings</li>
@@ -41,22 +41,22 @@ function Dashboard() {
         <section>
         <h3>What do you want to do?</h3>
           <div className="actions-grid">
-            <div className="action-card" onClick={() => navigate('/register')}>
-              <span className="icon">👤</span>
-              <h4>Manage students</h4>
-              <p>Give them an F and ruin their lives.</p>
+            <div className="action-card" onClick={() => navigate('/staff/courses')}>
+              <span className="icon">📚</span>
+              <h4>Manage Courses</h4>
+              <p>Upload and manage course content for your students.</p>
             </div>
 
-            <div className="action-card" onClick={() => navigate('/courses')}>
-              <span className="icon">🎓</span>
-              <h4>Add classes</h4>
-              <p>Create course content for your students.</p>
+            <div className="action-card" onClick={() => navigate('/addsubject')}>
+              <span className="icon">➕</span>
+              <h4>Create New Course</h4>
+              <p>Add a new course to the system.</p>
             </div>
 
-            <div className="action-card" onClick={() => navigate('/adminfacilities')}>
+            <div className="action-card" onClick={() => navigate('/stafffacilities')}>
               <span className="icon">🏫</span>
-              <h4>Make exams</h4>
-              <p>Make it so hard that the suicide rate in Egypt spikes.</p>
+              <h4>View Facilities</h4>
+              <p>Check available rooms and facilities.</p>
             </div>
           </div>
         </section>
