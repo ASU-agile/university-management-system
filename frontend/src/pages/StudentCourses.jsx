@@ -3,6 +3,7 @@ import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
 import axios from "../api/axiosInstance";
 import { getStudentCourses } from "../api/courses";
+import Sidebar from "../components/Sidebar";
 
 /*
 |--backend
@@ -42,17 +43,7 @@ function StudentCourses() {
 
   return (
     <div className="dashboard-container">
-      <aside className="sidebar">
-        <h2 className="sidebar-title">UMS</h2>
-        <ul>
-          <li onClick={() => navigate('/dashboard')}>Dashboard</li>
-          <li onClick={() => navigate('/studentcourses')}>Courses</li>
-          <li>Training</li>
-          <li>Archive</li>
-          <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
-          <li>Settings</li>
-        </ul>
-      </aside>
+      <Sidebar />
 
       <main className="main-content">
         <header className="topbar">

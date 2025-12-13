@@ -10,17 +10,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <aside className="sidebar">
-        <h2 className="sidebar-title">UMS</h2>
-        <ul>
-          <li onClick={() => navigate('/dashboard')}>Dashboard</li>
-          <li onClick={() => navigate('/studentcourses')}>Courses</li>
-          <li>My Exams</li>
-          <li>Archive</li>
-          <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
-          <li>Settings</li>
-        </ul>
-      </aside>
+      <Sidebar />
 
       <main className="main-content">
         <header className="topbar">

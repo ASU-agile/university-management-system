@@ -13,6 +13,7 @@ import StudentCourses from "./pages/StudentCourses";
 import CoursePage from "./pages/CoursePage";
 import AddSubjectForm from "./pages/AddSubjectForm";
 import EditSubjectForm from "./pages/EditSubjectForm";
+import CourseCatalog from "./pages/CourseCatalog";
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/staffdashboard" element={<StaffDashboard />}/>
         <Route path="/studentcourses" element={<StudentCourses />}/>
         <Route path="/course/:id" element={<CoursePage />} />
+        <Route path="/catalog" element={<CourseCatalog />} />
 
       </Routes>
     </Router>

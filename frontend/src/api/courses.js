@@ -14,3 +14,16 @@ export const getCourseMaterials = async (courseId) => {
   const { data } = await axios.get(`${BASE_URL}/courses/${courseId}/materials`);
   return data;
 };
+
+export const getCourseCatalog = async (studentId) => {
+  const res = await axios.get(`${BASE_URL}/courses/catalog/${studentId}`);
+  return res.data;
+};
+
+export const registerForSubject = async (studentId, subjectId) => {
+  const res = await axios.post(`${BASE_URL}/courses/register/${studentId}`, {
+    subject_id: subjectId
+  });
+  return res.data;
+};
+
