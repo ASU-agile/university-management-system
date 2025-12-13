@@ -5,19 +5,23 @@ import { getCourseMaterials, getStudentCourses } from "../api/courses";
 import Sidebar from "../components/Sidebar";
 
 function CoursePage() {
-  const { id } = useParams(); // course ID
+  const { id } = useParams();
   const [materials, setMaterials] = useState([]);
-  const [course, setCourse] = useState(null); // store course info
+  const [course, setCourse] = useState(null);
   const navigate = useNavigate();
+  const [assignments, setAssignments] = useState([]);
+
 
   useEffect(() => {
     const fetchCourseData = async () => {
       try {
-        // fetch materials
+
         const mats = await getCourseMaterials(id);
         setMaterials(mats);
 
-        // fetch course info
+        const ass = await getCourseAssignments(id);
+        setAssignments(ass);
+
         const courses = await getStudentCourses(null); // pass null to get all? or modify API to get by id
         const selectedCourse = courses.find(c => c.id === parseInt(id));
         setCourse(selectedCourse);
@@ -63,7 +67,18 @@ function CoursePage() {
 
           <section className="course-section">
             <h3>Assignments</h3>
-            <p>No assignments uploaded yet.</p>
+            {assignments.length === 0 && <p>No assignments uploaded yet.</p>}
+
+            {assignments.map(a => (
+              <div
+                className="material-card"
+                key={a.id}
+                onClick={() => navigate(`/course/${id}/assignment/${a.id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                {a.title}
+              </div>
+            ))}
           </section>
 
           <section className="course-section">
