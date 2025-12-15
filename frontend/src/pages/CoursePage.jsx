@@ -1,6 +1,8 @@
 // frontend/src/pages/CoursePage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getCourseMaterials, getStudentCourses } from "../api/courses";
+import Sidebar from "../components/Sidebar";
 import { getCourseMaterials, getCourseAssignments } from "../api/courses";
 import api from "../api/axiosInstance";
 
@@ -38,18 +40,8 @@ function CoursePage() {
 
   return (
     <div className="course-page-container">
-      <aside className="sidebar">
-        <h2 className="sidebar-title">UMS</h2>
-        <ul>
-          <li onClick={() => navigate("/dashboard")}>Dashboard</li>
-          <li onClick={() => navigate("/studentcourses")}>Courses</li>
-          <li>Training</li>
-          <li>Archive</li>
-          <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
-          <li>Settings</li>
-        </ul>
-      </aside>
-
+      <Sidebar />
+      
       <main className="course-main-content">
         {course && (
           <h2>

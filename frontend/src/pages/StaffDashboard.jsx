@@ -10,6 +10,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
+      <Sidebar />
       <aside className="sidebar">
         <h2 className="sidebar-title">UMS</h2>
         <ul>
