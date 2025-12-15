@@ -27,3 +27,23 @@ export const registerForSubject = async (studentId, subjectId) => {
   return res.data;
 };
 
+export const uploadCourseContent = async (courseId, file, contentType) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("subject_id", courseId);
+  formData.append("content_type", contentType);
+
+  // Axios interceptor will handle Content-Type for FormData automatically
+  const { data } = await axios.post(`${BASE_URL}/courses/upload-content`, formData);
+  return data;
+};
+
+export const deleteCourseContent = async (courseId, materialId, filePath) => {
+  const { data } = await axios.delete(
+    `${BASE_URL}/courses/${courseId}/materials/${materialId}`,
+    {
+      data: { file_path: filePath },
+    }
+  );
+  return data;
+};

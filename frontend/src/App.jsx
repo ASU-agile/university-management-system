@@ -15,7 +15,9 @@ import CoursePage from "./pages/CoursePage";
 import AddSubjectForm from "./pages/AddSubjectForm";
 import EditSubjectForm from "./pages/EditSubjectForm";
 import CourseCatalog from "./pages/CourseCatalog";
-
+import AssignmentSubmission from "./pages/AssignmentSubmission";
+import StaffCourses from "./pages/StaffCourses";
+import StaffUploadContent from "./pages/StaffUploadContent";
 
 function App() {
   return (
@@ -26,15 +28,19 @@ function App() {
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
         <Route path="/courses" element={<AdminSubjects />} />
         <Route path="/add-subject" element={<AddSubjectForm />} /> {/* form-only page */}
+        <Route path="/addsubject" element={<AddSubjectForm />} /> {/* alternative route */}
         <Route path="/edit-subject" element={<EditSubjectForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/adminfacilities" element={<AdminRoomManager />} />
         <Route path="/stafffacilities" element={<ViewRooms />} />
         <Route path="/staffdashboard" element={<StaffDashboard />} />
+        <Route path="/staff/dashboard" element={<StaffDashboard />} />
+        <Route path="/staff/courses" element={<StaffCourses />} />
+        <Route path="/staff/courses/:courseId/upload" element={<StaffUploadContent />} />
         <Route path="/studentcourses" element={<StudentCourses />} />
         <Route path="/course/:id" element={<CoursePage />} />
         <Route path="/catalog" element={<CourseCatalog />} />
-
+        <Route path="/course/:courseId/assignment/:assignmentId" element={<AssignmentSubmission />} />
       </Routes>
     </Router>
   );
