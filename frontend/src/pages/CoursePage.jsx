@@ -1,9 +1,8 @@
 // frontend/src/pages/CoursePage.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getCourseMaterials, getStudentCourses } from "../api/courses";
+import { getCourseMaterials, getCourseAssignments} from "../api/courses";
 import Sidebar from "../components/Sidebar";
-import { getCourseMaterials, getCourseAssignments } from "../api/courses";
 import api from "../api/axiosInstance";
 
 function CoursePage() {

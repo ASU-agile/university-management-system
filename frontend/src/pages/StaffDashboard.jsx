@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from "../components/Sidebar";
 
 
 function Dashboard() {

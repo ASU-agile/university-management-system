@@ -15,6 +15,12 @@ export const getCourseMaterials = async (courseId) => {
   return data;
 };
 
+export const getCourseAssignments = async (courseId) => {
+  const { data } = await axios.get(`${BASE_URL}/courses/${courseId}/assignments`);
+  return data;
+};
+
+
 export const getCourseCatalog = async (studentId) => {
   const res = await axios.get(`${BASE_URL}/courses/catalog/${studentId}`);
   return res.data;
