@@ -7,12 +7,15 @@ const router = express.Router();
 // --- HELPER: Map type_id to role string ---
 const getRoleFromTypeId = (type_id) => {
   switch (type_id) {
-    case 1: return 'staff';
+    case 1: return 'professor';
     case 2: return 'student';
     case 3: return 'admin';
-    default: return 'student';
+    case 4: return 'teaching assistant'
+    
+    //default: return 'student';
   }
 };
+
 
 // --- REGISTER ROUTE ---
 router.post('/register', async (req, res) => {
@@ -32,13 +35,32 @@ router.post('/register', async (req, res) => {
     if (authError) return res.status(400).json({ error: authError.message });
 
     // 2️⃣ Determine type_id
-    let type_id;
-    switch (role.toLowerCase()) {
-      case 'admin': type_id = 3; break;
-      case 'staff': type_id = 1; break;
-      case 'student': type_id = 2; break;
-      default: type_id = 2;
-    }
+   // NORMALIZE ROLE
+const normalizedRole = role.trim().toLowerCase();
+
+console.log('ROLE CHECK:', JSON.stringify(normalizedRole));
+
+let type_id = null;
+
+if (normalizedRole === 'professor') {
+  type_id = 1;
+} else if (normalizedRole === 'student') {
+  type_id = 2;
+} else if (normalizedRole === 'admin') {
+  type_id = 3;
+} else if (normalizedRole === 'teaching assistant') {
+  type_id = 4;
+}
+
+console.log('TYPE_ID RESOLVED →', type_id);
+
+if (type_id === null) {
+  return res.status(400).json({
+    error: `Role mapping failed. Received role="${normalizedRole}"`
+  });
+}
+
+
 
     // 3️⃣ Insert into users table and get inserted row
     const { data: insertedUser, error: insertError } = await supabase
@@ -50,7 +72,7 @@ router.post('/register', async (req, res) => {
     if (insertError) return res.status(500).json({ error: 'Failed to insert user in users table' });
 
     // 4️⃣ If student, assign major in student_major table
-    if (role.toLowerCase() === 'student') {
+    if (role === 'student') {
       // Check major exists
       const { data: majorCheck, error: majorErr } = await supabase
         .from('majors')

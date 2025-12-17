@@ -1,3 +1,4 @@
+// frontend/src/pages/Register.jsx
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
@@ -45,10 +46,18 @@ function Register() {
       setPassword("");
       setRole("student");
       setMajor("");
-    } catch (err) {
-      console.error("Registration error:", err);
-      setMessage(err.response?.data?.error || "Registration failed");
-    }
+    }catch (err) {
+  console.error("ERROR DATA:", err.response?.data);
+  console.error("ERROR STATUS:", err.response?.status);
+
+  setMessage(
+    err.response?.data?.error ||
+    JSON.stringify(err.response?.data) ||
+    "Registration failed"
+  );
+}
+
+
   };
 
   return (
@@ -74,9 +83,11 @@ function Register() {
 
         {/* ROLE DROPDOWN */}
         <select value={role} onChange={(e) => setRole(e.target.value)}>
+          <option value="professor">Professor</option>
           <option value="student">Student</option>
-          <option value="staff">Staff</option>
           <option value="admin">Admin</option>
+          <option value="teaching assistant">Teaching Assistant</option>
+          
         </select>
 
         {/* MAJOR DROPDOWN - only for students */}
