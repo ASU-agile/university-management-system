@@ -427,3 +427,18 @@ form p {
   background-color: #f6f8fc; /* nice light background */
   min-height: 100vh;
 }
+
+.layout-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.layout-content {
+  margin-left: 230px; /* must match Sidebar width */
+  padding: 30px;
+  width: calc(100% - 230px);
+  background-color: #f6f8fc;
+  min-height: 100vh;
+}
+
