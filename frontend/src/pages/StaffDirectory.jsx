@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../api/axiosInstance";
 import StaffCard from "../components/StaffCard";
 
 function StaffDirectory() {
   const [staff, setStaff] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStaff = async () => {
@@ -26,7 +28,13 @@ function StaffDirectory() {
       {staff.length === 0 && <p>No staff found.</p>}
 
       {staff.map((person) => (
-        <StaffCard key={person.id} staff={person} />
+        <div
+          key={person.id}
+          onClick={() => navigate("/staff-profile", { state: { staff: person } })}
+          style={{ cursor: "pointer", marginBottom: "15px" }}
+        >
+          <StaffCard staff={person} />
+        </div>
       ))}
     </div>
   );
