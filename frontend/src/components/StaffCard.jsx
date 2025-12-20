@@ -1,12 +1,6 @@
 import React from "react";
 
 function StaffCard({ staff }) {
-  const getRoleName = (type_id) => {
-    if (type_id === 1) return "Professor";
-    if (type_id === 4) return "Teaching Assistant";
-    return "Staff";
-  };
-
   return (
     <div
       style={{
@@ -38,7 +32,7 @@ function StaffCard({ staff }) {
         </h4>
 
         <p style={{ margin: "4px 0", fontWeight: "600" }}>
-          {getRoleName(staff.type_id)}
+          {staff.role || "Staff"}   {/* ← This is all you need */}
         </p>
 
         <p style={{ margin: 0, color: "#555" }}>

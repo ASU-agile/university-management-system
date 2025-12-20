@@ -12,11 +12,9 @@ function StaffProfile() {
     return null;
   }
 
-  const getRoleName = (type_id) => {
-    if (type_id === 1) return "Professor";
-    if (type_id === 4) return "Teaching Assistant";
-    return "Staff";
-  };
+  const getRoleName = (staff) => {
+  return staff.role || "Staff"; 
+};
 
   return (
     <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
@@ -48,7 +46,7 @@ function StaffProfile() {
 
         <h2>{staff.user_name || staff.name || "Unknown"}</h2>
         <p><strong>Email:</strong> {staff.user_email || staff.email}</p>
-        <p><strong>Role:</strong> {getRoleName(staff.type_id)}</p>
+        <p><strong>Role:</strong> {getRoleName(staff)}</p>
 
         <hr style={{ margin: "20px 0" }} />
 
