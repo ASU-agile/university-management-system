@@ -9,7 +9,7 @@ import authRoutes from "./src/routes/auth.js";
 import coursesRoutes from "./src/routes/courses.js";
 import subjectsRoute from "./src/routes/subjects.js"; 
 import assignmentsRoutes from "./src/routes/assignments.js";
-
+import staffRoutes from "./src/routes/staff.js";
 dotenv.config();
 
 const app = express();
@@ -24,6 +24,7 @@ app.use("/auth", authRoutes);
 app.use("/api/courses", coursesRoutes);
 app.use("/api/subjects", subjectsRoute);
 app.use("/api/assignments", assignmentsRoutes);
+app.use("/api/staff", staffRoutes);
 // root test endpoint
 app.get("/", (req, res) => res.send("University Management API is running."));
 
