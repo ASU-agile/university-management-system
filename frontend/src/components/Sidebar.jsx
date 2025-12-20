@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./Sidebar.css"; // optional if you want separate styling
+import "./Sidebar.css";
 
 export default function Sidebar() {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ export default function Sidebar() {
         <li onClick={() => navigate("/dashboard")}>Dashboard</li>
         <li onClick={() => navigate("/catalog")}>Courses</li>
         <li onClick={() => navigate("/studentcourses")}>My Courses</li>
+        <li onClick={() => navigate("/staff-directory")}>Staff Directory</li>
         <li onClick={() => navigate("/training")}>Training</li>
         <li onClick={() => navigate("/archive")}>Archive</li>
         <li onClick={() => navigate("/stafffacilities")}>Rooms</li>

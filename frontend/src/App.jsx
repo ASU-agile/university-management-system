@@ -18,6 +18,7 @@ import CourseCatalog from "./pages/CourseCatalog";
 import AssignmentSubmission from "./pages/AssignmentSubmission";
 import StaffCourses from "./pages/StaffCourses";
 import StaffUploadContent from "./pages/StaffUploadContent";
+import StaffDirectory from "./pages/StaffDirectory";
 
 function App() {
   return (
@@ -41,6 +42,8 @@ function App() {
         <Route path="/course/:id" element={<CoursePage />} />
         <Route path="/catalog" element={<CourseCatalog />} />
         <Route path="/course/:courseId/assignment/:assignmentId" element={<AssignmentSubmission />} />
+        <Route path="/staff-directory" element={<StaffDirectory />} />
+
       </Routes>
     </Router>
   );
