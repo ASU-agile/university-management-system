@@ -1,0 +1,278 @@
+/* SubmissionGrading.css */
+
+.grading-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.grading-main-content {
+  flex: 1;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  margin-left: 280px; /* Offset for fixed sidebar (230px width + 50px padding) */
+}
+
+.grading-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.grading-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: white;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.back-button:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  color: #333;
+}
+
+.submissions-table-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  overflow: hidden;
+  border: 1px solid #eef0f2;
+}
+
+.grading-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.grading-table thead {
+  background-color: #f8f9fa;
+}
+
+.grading-table th {
+  padding: 16px 20px;
+  text-align: left;
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #eef0f2;
+}
+
+.grading-table td {
+  padding: 16px 20px;
+  vertical-align: middle;
+  border-bottom: 1px solid #eef0f2;
+  color: #495057;
+}
+
+.grading-table tr:last-child td {
+  border-bottom: none;
+}
+
+.grading-table tr:hover td {
+  background-color: #fafbfc;
+}
+
+.student-name {
+  font-weight: 600;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #e9ecef;
+  color: #495057;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.file-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: #e7f1ff;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.file-link:hover {
+  background-color: #d0e4ff;
+}
+
+.grade-input {
+  width: 70px;
+  padding: 8px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-size: 15px;
+  text-align: center;
+  font-weight: 600;
+  color: #2c3e50;
+  transition: border-color 0.2s;
+}
+
+.grade-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.feedback-textarea {
+  width: 100%;
+  min-width: 250px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  min-height: 60px;
+  transition: border-color 0.2s;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.save-btn {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
+}
+
+.save-btn:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
+}
+
+.save-btn:active {
+  transform: translateY(0);
+}
+
+.empty-state {
+  padding: 60px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.date-text {
+  color: #888;
+  font-size: 13px;
+}
+
+.badge-late {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 8px;
+    border: 1px solid #ffcdd2;
+}
+
+.status-badge-missing {
+    background-color: #f5f5f5;
+    color: #757575;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.date-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.disabled-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    cursor: default;
+}
+
+.edit-btn {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.edit-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-1px);
+}
+
+.saved-badge {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 0.9rem;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.grade-display {
+    font-weight: 700;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.feedback-display {
+    font-size: 0.95rem;
+    color: #495057;
+    margin: 0;
+    white-space: pre-wrap;
+}

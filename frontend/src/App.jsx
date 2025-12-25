@@ -20,6 +20,7 @@ import StaffCourses from "./pages/StaffCourses";
 import StaffUploadContent from "./pages/StaffUploadContent";
 import StaffDirectory from "./pages/StaffDirectory";
 import StaffProfile from "./pages/StaffProfile";
+import SubmissionGrading from "./pages/SubmissionGrading";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path="/course/:courseId/assignment/:assignmentId" element={<AssignmentSubmission />} />
         <Route path="/staff-directory" element={<StaffDirectory />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
+        <Route path="/course/:courseId/assignment/:assignmentId/grading" element={<SubmissionGrading />} />
 
       </Routes>
     </Router>

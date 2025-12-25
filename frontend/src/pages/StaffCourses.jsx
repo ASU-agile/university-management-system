@@ -8,7 +8,7 @@ function StaffCourses() {
   const [loading, setLoading] = useState(true);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const userName = user?.email.split("@")[0].replace(".", " ") || "User";
+  const userName = user?.email ? user.email.split("@")[0].replace(".", " ") : "User";
 
   useEffect(() => {
     const fetchStaffCourses = async () => {

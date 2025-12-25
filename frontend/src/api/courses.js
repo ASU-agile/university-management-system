@@ -2,7 +2,9 @@
 
 import axios from "./axiosInstance"; // use your axios instance
 
-const BASE_URL = "http://localhost:5000/api";
+// axiosInstance already has baseURL 'http://localhost:5000'
+// So we just need to append '/api/...'
+const BASE_URL = "/api";
 
 export const getStudentCourses = async (id) => {
   const res = await axios.get(`${BASE_URL}/courses/student/${id}`);

@@ -48,7 +48,7 @@ function StudentCourses() {
       <main className="main-content">
         <header className="topbar">
           <h2 className="welcome-message">
-            Welcome, {user?.email.split('@')[0].replace('.', ' ')}
+            Welcome, {user?.email ? user.email.split('@')[0].replace('.', ' ') : 'Student'}
           </h2>
           <button
             className="customize-button"

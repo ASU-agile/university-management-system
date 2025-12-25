@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../api/axiosInstance";
+import React, { useEffect, useState } from "react";
+import Sidebar from "../components/Sidebar";
+import "./AssignmentSubmission.css";
 
 function AssignmentSubmission() {
     const { assignmentId } = useParams();
@@ -10,6 +12,7 @@ function AssignmentSubmission() {
     const [file, setFile] = useState(null);
     const [submitted, setSubmitted] = useState(false);
     const [uploading, setUploading] = useState(false);
+    const [submissionDetails, setSubmissionDetails] = useState(null);
 
     const getStudentId = () => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -17,18 +20,31 @@ function AssignmentSubmission() {
     };
 
     useEffect(() => {
-        const fetchAssignment = async () => {
+        const fetchAssignmentAndSubmission = async () => {
+             const studentId = getStudentId();
             try {
-                const res = await axios.get(
-                    `http://localhost:5000/api/assignments/${assignmentId}`
-                );
+                // Fetch assignment details
+                const res = await api.get(`/api/assignments/${assignmentId}`);
                 setAssignment(res.data);
+
+                // Fetch student submission
+                if (studentId) {
+                    const subRes = await api.get(
+                        `/api/assignments/${assignmentId}/submission?student_id=${studentId}`
+                    );
+                    if (subRes.data) {
+                        console.log("Student Submission Details:", subRes.data);
+                        setSubmissionDetails(subRes.data);
+                        setSubmitted(true);
+                    }
+                }
+
             } catch (err) {
-                console.error("Failed to load assignment:", err);
+                console.error("Failed to load assignment data:", err);
             }
         };
 
-        fetchAssignment();
+        fetchAssignmentAndSubmission();
     }, [assignmentId]);
 
     const submitAssignment = async () => {
@@ -39,23 +55,16 @@ function AssignmentSubmission() {
 
         const studentId = getStudentId();
 
-        console.log("Submitting file:", file, "assignmentId:", assignmentId, "studentId:", studentId);
-
         const formData = new FormData();
         formData.append("file", file); 
         formData.append("assignment_id", assignmentId);
         formData.append("student_id", studentId);
 
-        console.log("FormData contents:");
-        for (let pair of formData.entries()) {
-            console.log(pair[0], pair[1]);
-        }
-
         setUploading(true);
 
         try {
-            const res = await axios.post(
-                "http://localhost:5000/api/assignments/submit",
+            const res = await api.post(
+                "/api/assignments/submit",
                 formData,
                 {
                     headers: {
@@ -66,10 +75,12 @@ function AssignmentSubmission() {
             
             console.log("Upload response:", res.data);
             setSubmitted(true);
+            setSubmissionDetails({
+                submitted_at: new Date().toISOString()
+            });
             alert("Assignment submitted successfully!");
         } catch (err) {
             console.error("Upload failed:", err);
-            console.error("Error response:", err.response?.data);
             alert(`Upload failed: ${err.response?.data?.error || err.message}`);
         } finally {
             setUploading(false);
@@ -77,76 +88,124 @@ function AssignmentSubmission() {
     };
 
     return (
-        <div className="course-page-container">
-            {/* Sidebar */}
-            <aside className="sidebar">
-                <h2 className="sidebar-title">UMS</h2>
-                <ul>
-                    <li onClick={() => navigate("/dashboard")}>Dashboard</li>
-                    <li onClick={() => navigate("/studentcourses")}>Courses</li>
-                    <li>Training</li>
-                    <li>Archive</li>
-                    <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
-                    <li>Settings</li>
-                </ul>
-            </aside>
+        <div className="submission-container">
+            <Sidebar />
 
-            {/* Main content */}
-            <main className="course-main-content">
-                {!assignment && <p>Loading...</p>}
+            <main className="submission-main-content">
+                {!assignment && <p>Loading assignment...</p>}
 
                 {assignment && (
-                    <div className="assignment-content">
-                        <h2>{assignment.title}</h2>
-                        <p>{assignment.description}</p>
-                        <h4>
-                            Deadline: {new Date(assignment.deadline).toLocaleString()}
-                        </h4>
-
-                        {/* Show assignment PDF from Supabase */}
-                        {assignment.file_path && (
-                            <div style={{ margin: "20px 0" }}>
-                                <iframe
-                                    src={`https://wlzboctpseaptffewrzb.supabase.co/storage/v1/object/public/materials/${assignment.file_path}`}
-                                    width="100%"
-                                    height="600px"
-                                    title="Assignment PDF"
-                                />
-                            </div>
-                        )}
-
-                        {/* Upload submission */}
-                        <div className="upload-box" style={{ marginTop: "20px" }}>
-                            <input
-                                type="file"
-                                accept=".pdf,.doc,.docx"
-                                onChange={(e) => {
-                                    const selectedFile = e.target.files[0];
-                                    console.log("File selected:", selectedFile);
-                                    setFile(selectedFile);
-                                }}
-                            />
-                            <button
-                                onClick={submitAssignment}
-                                className="submit-btn"
-                                disabled={!file || uploading}
-                                style={{ 
-                                    marginLeft: "10px", 
-                                    padding: "6px 12px", 
-                                    cursor: uploading ? "not-allowed" : "pointer",
-                                    opacity: uploading ? 0.6 : 1
+                    <>
+                        <header className="submission-header">
+                             <button 
+                                onClick={() => navigate("/studentcourses")}
+                                style={{
+                                    marginBottom: "15px",
+                                    padding: "8px 16px",
+                                    border: "1px solid #ddd",
+                                    background: "white",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    color: "#555"
                                 }}
                             >
-                                {uploading ? "Uploading..." : "Submit"}
+                                &larr; Back to Courses
                             </button>
-                        </div>
+                            <h2>{assignment.title}</h2>
+                            <div className="submission-meta">
+                                <span>📅 Due: {new Date(assignment.deadline).toLocaleString()}</span>
+                                <span>📚 Course ID: {assignment.subject_id}</span>
+                            </div>
+                        </header>
 
-                        {submitted && (
-                            <p style={{ color: "green", marginTop: "15px" }}>
-                                ✅ Submitted successfully!
-                            </p>
-                        )}
-                    </div>
+                        <div className="submission-card">
+                            <div className="assignment-description">
+                                <h3>Instructions</h3>
+                                <p>{assignment.description}</p>
+                            </div>
+
+                            {/* Show assignment PDF */}
+                            {assignment.file_path && (
+                                <div className="pdf-preview">
+                                    <iframe
+                                        src={`https://wlzboctpseaptffewrzb.supabase.co/storage/v1/object/public/materials/${assignment.file_path}`}
+                                        width="100%"
+                                        height="500px"
+                                        title="Assignment PDF"
+                                        style={{ border: "none" }}
+                                    />
+                                </div>
+                            )}
+
+                            {/* Submission Area */}
+                            {["professor", "teaching assistant", "admin", "staff"].includes(JSON.parse(localStorage.getItem('user'))?.role) ? (
+                                <div className="status-card" style={{ background: '#e9ecef', border: '1px solid #dee2e6' }}>
+                                    <div className="status-header">
+                                        <span>👀 View Only (Staff)</span>
+                                    </div>
+                                    <p>You are viewing this assignment as a staff member.</p>
+                                    <button 
+                                        onClick={() => navigate(`/course/${assignment.subject_id}/assignment/${assignment.id}/grading`)}
+                                        style={{
+                                            marginTop: '10px',
+                                            padding: '8px 16px',
+                                            background: '#28a745',
+                                            color: '#fff',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer'
+                                        }}
+                                    >
+                                        Go to Grading
+                                    </button>
+                                </div>
+                            ) : !submitted ? (
+                                <div className="upload-section">
+                                    <input
+                                        type="file"
+                                        accept=".pdf,.doc,.docx"
+                                        className="file-input"
+                                        onChange={(e) => setFile(e.target.files[0])}
+                                    />
+                                    <button
+                                        onClick={submitAssignment}
+                                        className="submit-btn"
+                                        disabled={!file || uploading}
+                                    >
+                                        {uploading ? "Uploading..." : "Submit Assignment"}
+                                    </button>
+                                </div>
+                            ) : (
+                                <div className="status-card submitted">
+                                    <div className="status-header">
+                                        <span>✅ Submitted Successfully</span>
+                                    </div>
+                                    <p>
+                                        You submitted this assignment on {new Date(submissionDetails?.submitted_at || Date.now()).toLocaleString()}
+                                    </p>
+
+                                    {/* Grade & Feedback Display */}
+                                    {(submissionDetails?.grade != null || submissionDetails?.feedback) && (
+                                        <div className="grade-feedback-section">
+                                            {submissionDetails.grade != null && (
+                                                <div className="grade-box">
+                                                    <span className="grade-label">Grade</span>
+                                                    <div className="grade-value">{submissionDetails.grade} / 10</div>
+                                                </div>
+                                            )}
+                                            
+                                            {submissionDetails.feedback && (
+                                                <div className="feedback-box">
+                                                    <span className="grade-label">Feedback</span>
+                                                    <p className="feedback-text">{submissionDetails.feedback}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    </>
                 )}
             </main>
         </div>
