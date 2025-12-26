@@ -61,12 +61,16 @@ function App() {
 
         {/* ================= STAFF LAYOUT (NEW) ================= */}
         <Route element={<StaffLayout />}>
-          <Route path="/staff/dashboard" element={<StaffDashboard />} />
+          <Route path="/staffdashboard" element={<StaffDashboard />} />
           <Route path="/staff/courses" element={<StaffCourses />} />
           <Route
             path="/staff/courses/:courseId/upload"
             element={<StaffUploadContent />}
           />
+          <Route path="/staff/responsibilities" element={<TAResponsibilities />} />
+          <Route path="/staff/assign-responsibilities" element={<AssignResponsibilities />} />
+          <Route path="/stafffacilities" element={<ViewRooms />} />
+          <Route path="/addsubject" element={<AddSubjectForm />} />
         </Route>
 
         {/* ================= ADMIN LAYOUT (NEW) ================= */}
@@ -87,18 +91,12 @@ function App() {
           path="/course/:courseId/assignment/:assignmentId"
           element={<AssignmentSubmission />}
         />
-        <Route path="/staffdashboard" element={<StaffDashboard />} />
-        <Route path="/stafffacilities" element={<ViewRooms />} />
         <Route path="/courses" element={<AdminSubjects />} />
         <Route path="/add-subject" element={<AddSubjectForm />} />
         <Route path="/addsubject" element={<AddSubjectForm />} />
         <Route path="/edit-subject" element={<EditSubjectForm />} />
         <Route path="/adminfacilities" element={<AdminRoomManager />} />
-        <Route path="/stafffacilities" element={<ViewRooms />} />
-        <Route path="/staffdashboard" element={<StaffDashboard />} />
-        <Route path="/staff/dashboard" element={<StaffDashboard />} />
-        <Route path="/staff/courses" element={<StaffCourses />} />
-        <Route path="/staff/courses/:courseId/upload" element={<StaffUploadContent />} />
+
         <Route path="/studentcourses" element={<StudentCourses />} />
         <Route path="/course/:id" element={<CoursePage />} />
         <Route path="/catalog" element={<CourseCatalog />} />
@@ -106,10 +104,7 @@ function App() {
         <Route path="/staff-directory" element={<StaffDirectory />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
         <Route path="/course/:courseId/assignment/:assignmentId/grading" element={<SubmissionGrading />} />
-        <Route element={<DashboardLayout />}>
-        <Route path="/staff/responsibilities" element={<TAResponsibilities />} />
-        <Route path="/staff/assign-responsibilities" element={<AssignResponsibilities />} />
-      </Route>
+
 
 
 

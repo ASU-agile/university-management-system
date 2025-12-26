@@ -13,6 +13,7 @@ function CoursePage() {
   const [filterSection, setFilterSection] = useState('all');
   const navigate = useNavigate();
   const [assignments, setAssignments] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
 
 
   useEffect(() => {
@@ -30,6 +31,10 @@ function CoursePage() {
         const courses = subjectsRes.data || [];
         const selectedCourse = courses.find((c) => c.id === parseInt(id));
         setCourse(selectedCourse);
+
+        // Fetch announcements
+        const announcementsRes = await api.get(`/api/announcements/${id}`);
+        setAnnouncements(announcementsRes.data || []);
       } catch (err) {
         console.error("Failed to fetch course data:", err);
       }
@@ -71,6 +76,44 @@ function CoursePage() {
             </label>
           </div>
         </div>
+
+        {/* Announcements Section - Prominently displayed */}
+        {announcements.length > 0 && (
+          <section style={{
+            background: '#fff3cd',
+            border: '2px solid #ffc107',
+            borderRadius: '8px',
+            padding: '20px',
+            marginBottom: '30px',
+            boxShadow: '0 4px 12px rgba(255, 193, 7, 0.3)'
+          }}>
+            <h3 style={{ margin: '0 0 20px 0', display: 'flex', alignItems: 'center', gap: '10px', color: '#856404' }}>
+              📢 Announcements
+            </h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+              {announcements.map((ann) => (
+                <div key={ann.id} style={{
+                  background: 'white',
+                  padding: '15px',
+                  borderRadius: '6px',
+                  borderLeft: '4px solid #ffc107',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                }}>
+                  <h4 style={{ margin: '0 0 8px 0', color: '#333', fontSize: '16px' }}>
+                    {ann.title}
+                  </h4>
+                  <p style={{ margin: '0 0 10px 0', color: '#555', lineHeight: '1.6' }}>
+                    {ann.content}
+                  </p>
+                  <div style={{ fontSize:'12px', color:'#888', display:'flex', gap:'15px' }}>
+                    <span>📅 {new Date(ann.created_at).toLocaleDateString()}</span>
+                    <span>👤 {ann.author?.user_email?.split('@')[0] || 'Staff'}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <div className="course-sections">
           {/** Render main course sections in a fixed order. materials are grouped by content_type. */}

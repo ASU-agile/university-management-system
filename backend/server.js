@@ -5,12 +5,13 @@ import dotenv from "dotenv";
 
 import roomsRoute from "./src/routes/rooms.js";
 import adminRoomRoute from "./src/routes/adminRoom.js";
-import authRoutes from "./src/routes/auth.js";  
+import authRoutes from "./src/routes/auth.js";
 import coursesRoutes from "./src/routes/courses.js";
-import subjectsRoute from "./src/routes/subjects.js"; 
+import subjectsRoute from "./src/routes/subjects.js";
 import assignmentsRoutes from "./src/routes/assignments.js";
 import staffRoutes from "./src/routes/staff.js";
 import taTasksRoutes from './src/routes/taTasks.js';
+import announcementsRoutes from './src/routes/announcements.js';
 
 
 
@@ -30,6 +31,7 @@ app.use("/api/subjects", subjectsRoute);
 app.use("/api/assignments", assignmentsRoutes);
 app.use("/api/staff", staffRoutes);
 app.use('/ta-tasks', taTasksRoutes);
+app.use('/api/announcements', announcementsRoutes);
 
 // root test endpoint
 app.get("/", (req, res) => res.send("University Management API is running."));

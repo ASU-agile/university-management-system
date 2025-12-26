@@ -16,6 +16,12 @@ function StaffUploadContent() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState("");
 
+  // Announcements state
+  const [announcements, setAnnouncements] = useState([]);
+  const [announcementTitle, setAnnouncementTitle] = useState("");
+  const [announcementContent, setAnnouncementContent] = useState("");
+  const [announcementMessage, setAnnouncementMessage] = useState("");
+
   const user = JSON.parse(localStorage.getItem("user"));
   const userName = user?.email.split("@")[0].replace(".", " ") || "User";
 
@@ -35,6 +41,10 @@ function StaffUploadContent() {
         // Fetch existing materials
         const res = await api.get(`/api/courses/${courseId}/materials`);
         setMaterials(res.data || []);
+
+        // Fetch announcements
+        const announcementsRes = await api.get(`/api/announcements/${courseId}`);
+        setAnnouncements(announcementsRes.data || []);
       } catch (err) {
         console.error("Failed to fetch course details:", err);
       }
@@ -129,12 +139,62 @@ function StaffUploadContent() {
     }
   };
 
+  const handleCreateAnnouncement = async () => {
+    if (!announcementTitle || !announcementContent) {
+      setAnnouncementMessage("Please provide both title and content");
+      return;
+    }
+
+    try {
+      const payload = {
+        course_id: courseId,
+        created_by: user?.id,
+        title: announcementTitle,
+        content: announcementContent,
+      };
+      
+      console.log("Creating announcement with payload:", payload);
+      
+      await api.post("/api/announcements", payload);
+
+      setAnnouncementMessage("✅ Announcement created successfully!");
+      setAnnouncementTitle("");
+      setAnnouncementContent("");
+
+      // Refresh announcements
+      const announcementsRes = await api.get(`/api/announcements/${courseId}`);
+      setAnnouncements(announcementsRes.data || []);
+    } catch (err) {
+      console.error("Create announcement failed:", err);
+      setAnnouncementMessage(`❌ Failed: ${err.response?.data?.error || err.message}`);
+    }
+  };
+
+  const handleDeleteAnnouncement = async (announcementId) => {
+    if (!window.confirm("Delete this announcement?")) return;
+
+    try {
+      await api.delete(`/api/announcements/${announcementId}`, {
+        data: { created_by: user?.id },
+      });
+
+      setAnnouncementMessage("✅ Announcement deleted successfully!");
+
+      // Refresh announcements
+      const announcementsRes = await api.get(`/api/announcements/${courseId}`);
+      setAnnouncements(announcementsRes.data || []);
+    } catch (err) {
+      console.error("Delete announcement failed:", err);
+      setAnnouncementMessage(`❌ Failed: ${err.response?.data?.error || err.message}`);
+    }
+  };
+
   return (
     <div className="dashboard-container">
       <aside className="sidebar">
         <h2 className="sidebar-title">UMS</h2>
         <ul>
-          <li onClick={() => navigate("/staff/dashboard")}>Dashboard</li>
+          <li onClick={() => navigate("/staffdashboard")}>Dashboard</li>
           <li onClick={() => navigate("/courses")}>My Courses</li>
           <li>Training</li>
           <li>Archive</li>
@@ -252,6 +312,91 @@ function StaffUploadContent() {
                   }}
                 >
                   {message}
+                </div>
+              )}
+            </div>
+          </section>
+
+          {/* Announcements Section */}
+          <section className="announcements-section">
+            <h3>📢 Course Announcements</h3>
+
+            <div className="announcement-form">
+              <h4>Create New Announcement</h4>
+              <div className="form-group">
+                <label htmlFor="announcementTitle">Title:</label>
+                <input
+                  id="announcementTitle"
+                  type="text"
+                  placeholder="e.g., Midterm Exam Schedule"
+                  value={announcementTitle}
+                  onChange={(e) => setAnnouncementTitle(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="announcementContent">Content:</label>
+                <textarea
+                  id="announcementContent"
+                  rows="4"
+                  placeholder="Enter announcement details..."
+                  value={announcementContent}
+                  onChange={(e) => setAnnouncementContent(e.target.value)}
+                />
+              </div>
+
+              <button
+                onClick={handleCreateAnnouncement}
+                className="btn-primary"
+                style={{
+                  padding: "10px 20px",
+                }}
+              >
+                Post Announcement
+              </button>
+
+              {announcementMessage && (
+                <div
+                  style={{
+                    marginTop: "15px",
+                    padding: "10px",
+                    borderRadius: "4px",
+                    backgroundColor: announcementMessage.includes("✅")
+                      ? "#d4edda"
+                      : "#f8d7da",
+                    color: announcementMessage.includes("✅") ? "#155724" : "#721c24",
+                  }}
+                >
+                  {announcementMessage}
+                </div>
+              )}
+            </div>
+
+            <div className="announcements-list">
+              <h4>Posted Announcements ({announcements.length})</h4>
+              {announcements.length === 0 ? (
+                <p>No announcements yet.</p>
+              ) : (
+                <div className="announcements-grid">
+                  {announcements.map((ann) => (
+                    <div key={ann.id} className="announcement-item">
+                      <h5>{ann.title}</h5>
+                      <p>{ann.content}</p>
+                      <div className="announcement-meta">
+                        <span>Posted: {new Date(ann.created_at).toLocaleString()}</span>
+                        <span>By: {ann.author?.user_email || "Unknown"}</span>
+                      </div>
+                      {user?.id === ann.created_by && (
+                        <button
+                          onClick={() => handleDeleteAnnouncement(ann.id)}
+                          className="btn-delete"
+                          style={{ marginTop: "10px", padding: "6px 12px" }}
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
@@ -419,6 +564,83 @@ function StaffUploadContent() {
 
         .btn-delete:hover {
           background: #c82333;
+        }
+
+        .announcements-section {
+          margin: 30px 0;
+          padding: 20px;
+          background: #f8f9fa;
+          border-radius: 8px;
+        }
+
+        .announcement-form {
+          margin-bottom: 30px;
+          padding: 20px;
+          background: white;
+          border-radius: 8px;
+        }
+
+        .announcement-form h4 {
+          margin-top: 0;
+          margin-bottom: 15px;
+        }
+
+        .announcement-form textarea {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 14px;
+          font-family: inherit;
+          resize: vertical;
+        }
+
+        .announcement-form input[type="text"] {
+          width: 100%;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 14px;
+        }
+
+        .announcements-list {
+          margin-top: 20px;
+        }
+
+        .announcements-grid {
+          display: grid;
+          gap: 15px;
+          margin-top: 15px;
+        }
+
+        .announcement-item {
+          background: white;
+          padding: 15px;
+          border-radius: 8px;
+          border-left: 4px solid #007bff;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .announcement-item h5 {
+          margin: 0 0 10px 0;
+          color: #333;
+          font-size: 16px;
+        }
+
+        .announcement-item p {
+          margin: 0 0 10px 0;
+          color: #555;
+          line-height: 1.5;
+        }
+
+        .announcement-meta {
+          display: flex;
+          gap: 20px;
+          font-size: 12px;
+          color: #888;
+          margin-top: 10px;
+          padding-top: 10px;
+          border-top: 1px solid #eee;
         }
       `}</style>
     </div>

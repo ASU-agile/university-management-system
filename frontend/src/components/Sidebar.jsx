@@ -14,8 +14,18 @@ export default function Sidebar() {
       <ul>
         {isStaff ? (
           <>
-            <li onClick={() => navigate("/staff/dashboard")}>Dashboard</li>
+            <li onClick={() => navigate("/staffdashboard")}>Dashboard</li>
             <li onClick={() => navigate("/staff/courses")}>My Courses</li>
+            {role === "professor" && (
+              <li onClick={() => navigate("/staff/assign-responsibilities")}>
+                Assign Responsibilities
+              </li>
+            )}
+            {role === "teaching assistant" && (
+              <li onClick={() => navigate("/staff/responsibilities")}>
+                Responsibilities
+              </li>
+            )}
             <li onClick={() => navigate("/training")}>Training</li>
             <li onClick={() => navigate("/archive")}>Archive</li>
             <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
