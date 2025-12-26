@@ -15,7 +15,21 @@ function Dashboard() {
     <div className="dashboard-container">
       <Sidebar />
 
-
+      <main className="main-content">
+        <header className="topbar">
+          <h2 className="welcome-message">
+            Welcome to your dashboard, admin {userName.charAt(0).toUpperCase() + userName.slice(1)}!
+          </h2>
+          <button
+            className="customize-button"
+            onClick={() => {
+              localStorage.removeItem('user');
+              window.location.href = '/';
+            }}
+          >
+            Logout
+          </button>
+        </header>
       <section>
         <h3>What do you want to do?</h3>
         <div className="actions-grid">
@@ -61,6 +75,7 @@ function Dashboard() {
           )}
         </div>
       </section>
+      </main>
     </div>
   );
 }

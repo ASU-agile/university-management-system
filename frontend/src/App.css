@@ -323,6 +323,11 @@ form p {
 
 .dashboard-container {
   display: flex;
+  min-height: 100vh;   /* fill vertical space */
+  width: 100vw;        /* fill horizontal space */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .main-content {
@@ -415,8 +420,13 @@ form p {
 /* Layout container */
 .layout-container {
   display: flex;
-  width: 100%;
-  min-height: 100vh;
+ 
+  min-height: 100vh;   /* fill vertical space */
+  width: 100vw;        /* fill horizontal space */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
 }
 
 /* Main content area */
