@@ -33,7 +33,52 @@ app.use('/ta-tasks', taTasksRoutes);
 
 // root test endpoint
 app.get("/", (req, res) => res.send("University Management API is running."));
+// simple health check
+app.get("/_health", (req, res) => res.json({ status: "ok", pid: process.pid }));
+
+// process-level diagnostic hooks to capture crashes and exits
+process.on("uncaughtException", (err) => {
+  console.error("Uncaught exception:", err);
+});
+process.on("unhandledRejection", (reason, promise) => {
+  console.error("Unhandled rejection:", reason, promise);
+});
+process.on("exit", (code) => {
+  console.log(`Process exiting with code: ${code}`);
+});
+process.on("SIGTERM", () => {
+  console.log("SIGTERM received");
+});
+process.on("SIGINT", () => {
+  console.log("SIGINT received");
+});
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+console.log("Starting server...");
+
+// Debug: beforeExit to capture why node decides to terminate
+process.on("beforeExit", (code) => {
+  console.log(`beforeExit with code: ${code}`);
+  try {
+    const handles = process._getActiveHandles();
+    console.log("Active handles count:", handles.length);
+  } catch (e) {
+    console.log("Could not enumerate active handles", e);
+  }
+});
+
+const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// Debug: log uptime every 5s to show server stays alive (temporary)
+const uptimeInterval = setInterval(() => {
+  console.log(`Server alive. uptime: ${process.uptime().toFixed(1)}s`);
+}, 5000);
+
+server.on("close", () => {
+  console.log("Server closed");
+  clearInterval(uptimeInterval);
+});
+
+// expose server on process for interactive debugging (optional)
+process.server = server;

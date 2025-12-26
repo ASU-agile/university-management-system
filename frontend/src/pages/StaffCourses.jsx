@@ -13,11 +13,17 @@ function StaffCourses() {
   useEffect(() => {
     const fetchStaffCourses = async () => {
       try {
-        // Get all subjects (you may want to filter by staff_id if you have that field)
-        const res = await api.get("/api/subjects");
-        setCourses(res.data || []);
-        // Store in localStorage for reference in other components
-        localStorage.setItem("staffCourses", JSON.stringify(res.data || []));
+        if (user?.role === 'staff') {
+          // Fetch only assigned subjects for this staff member
+          const res = await api.get(`/api/staff/${user.id}/subjects`);
+          setCourses(res.data || []);
+          localStorage.setItem("staffCourses", JSON.stringify(res.data || []));
+        } else {
+          // Admins or others see the full subjects list
+          const res = await api.get("/api/subjects");
+          setCourses(res.data || []);
+          localStorage.setItem("staffCourses", JSON.stringify(res.data || []));
+        }
       } catch (err) {
         console.error("Failed to fetch courses:", err);
       } finally {
