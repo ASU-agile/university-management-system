@@ -65,7 +65,34 @@ function StaffProfile() {
   };
 
   return (
-    <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
+    <div className="dashboard-container">
+      <aside className="sidebar">
+        <h2 className="sidebar-title">UMS</h2>
+        <ul>
+          {currentUser?.role === 'admin' ? (
+            <>
+              <li onClick={() => navigate("/admin/dashboard")}>Dashboard</li>
+              <li onClick={() => navigate("/students")}>Students</li>
+              <li onClick={() => navigate("/courses")}>Courses</li>
+              <li onClick={() => navigate("/admin/staff")}>Staff</li>
+              <li onClick={() => navigate("/settings")}>Settings</li>
+            </>
+          ) : (
+            <>
+              <li onClick={() => navigate("/staff/dashboard")}>Dashboard</li>
+              <li onClick={() => navigate("/staff/courses")}>My Courses</li>
+              <li onClick={() => navigate("/staff-profile", { state: { staff: currentUser } })}>Office Hours</li>
+              <li>Training</li>
+              <li>Archive</li>
+              <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
+              <li>Settings</li>
+            </>
+          )}
+        </ul>
+      </aside>
+
+      <main className="main-content">
+        <div style={{ padding: "20px", maxWidth: "600px", margin: "0 auto" }}>
       <span
         onClick={() => navigate("/staff-directory")}
         style={{
@@ -152,7 +179,9 @@ function StaffProfile() {
 
         <AssignedCoursesBlock staff={staff} canAdmin={JSON.parse(localStorage.getItem("user")||"{}")?.role === 'admin'} />
 
-      </div>
+        </div>
+        </div>
+      </main>
     </div>
   );
 }
@@ -162,15 +191,19 @@ function AssignedCoursesBlock({ staff, canAdmin }) {
   const [allSubjects, setAllSubjects] = React.useState([]);
   const [assignedIds, setAssignedIds] = React.useState(new Set());
   const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+      setError(null);
       try {
         const [subjectsRes, assignedRes] = await Promise.all([
           api.get("/api/subjects"),
           api.get(`/api/staff/${staff.id}/subjects`)
         ]);
+        console.log("Subjects response data:", subjectsRes.data);
+        console.log("Is array?", Array.isArray(subjectsRes.data));
 
         const subjects = Array.isArray(subjectsRes.data) ? subjectsRes.data : [];
         const assigned = Array.isArray(assignedRes.data) ? assignedRes.data : [];
@@ -179,6 +212,7 @@ function AssignedCoursesBlock({ staff, canAdmin }) {
         setAssignedIds(new Set(assigned.map(s => s.id)));
       } catch (err) {
         console.error("Failed to fetch subjects or assignments", err);
+        setError("Failed to load data: " + (err.message || "Unknown error"));
       } finally {
         setLoading(false);
       }
@@ -207,6 +241,7 @@ function AssignedCoursesBlock({ staff, canAdmin }) {
   };
 
   if (loading) return <p>Loading courses...</p>;
+  if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   return (
     <div style={{ textAlign: "left" }}>

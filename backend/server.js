@@ -71,9 +71,6 @@ process.on("beforeExit", (code) => {
 const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // Debug: log uptime every 5s to show server stays alive (temporary)
-const uptimeInterval = setInterval(() => {
-  console.log(`Server alive. uptime: ${process.uptime().toFixed(1)}s`);
-}, 5000);
 
 server.on("close", () => {
   console.log("Server closed");

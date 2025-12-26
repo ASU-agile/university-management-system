@@ -19,6 +19,7 @@ function Dashboard() {
         <ul>
           <li onClick={() => navigate('/staff/dashboard')}>Dashboard</li>
           <li onClick={() => navigate('/staff/courses')}>My Courses</li>
+          <li onClick={() => navigate('/staff-profile', { state: { staff: user } })}>Office Hours</li>
 
           {userRole === "teaching assistant" && (
           <li onClick={() => navigate('/staff/responsibilities')}>

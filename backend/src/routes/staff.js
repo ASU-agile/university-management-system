@@ -120,7 +120,7 @@ router.get("/:id/subjects", async (req, res) => {
     res.json(subjects);
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Failed to fetch staff subjects" });
+    res.status(500).json({ message: "Failed to fetch staff subjects", error: err.message, details: err.hint || err.details });
   }
 });
 

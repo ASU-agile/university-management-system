@@ -76,6 +76,7 @@ function App() {
           <Route path="/admin/subjects/add" element={<AddSubjectForm />} />
           <Route path="/admin/subjects/edit" element={<EditSubjectForm />} />
           <Route path="/admin/rooms" element={<AdminRoomManager />} />
+          <Route path="/admin/staff" element={<StaffDirectory />} />
         </Route>
 
         {/* ================= LEGACY ROUTES (KEEP FOR PHASE 1) ================= */}
@@ -104,6 +105,7 @@ function App() {
         <Route path="/catalog" element={<CourseCatalog />} />
         <Route path="/course/:courseId/assignment/:assignmentId" element={<AssignmentSubmission />} />
         <Route path="/staff-directory" element={<StaffDirectory />} />
+        <Route path="/staff" element={<StaffDirectory />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
         <Route path="/course/:courseId/assignment/:assignmentId/grading" element={<SubmissionGrading />} />
         <Route element={<DashboardLayout />}>
