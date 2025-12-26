@@ -5,7 +5,7 @@ import axios from '../api/axiosInstance';
 function TAResponsibilities() {
   const user = JSON.parse(localStorage.getItem('user'));
   const [tasks, setTasks] = useState([]);
-
+  
   const fetchTasks = async () => {
     try {
       const res = await axios.get(`/ta-tasks/ta/${user.id}`);
@@ -13,7 +13,14 @@ function TAResponsibilities() {
     } catch (err) {
       console.error(err);
     }
+    console.log(tasks);
+
   };
+  useEffect(() => {
+  console.log("Logged-in TA user:", user);
+  console.log("TA ID sent to backend:", user?.id);
+  fetchTasks();
+}, []);
 
   const markComplete = async (taskId) => {
     try {
@@ -46,7 +53,7 @@ function TAResponsibilities() {
           <tbody>
             {tasks.map(task => (
               <tr key={task.id}>
-                <td>{task.course_id}</td>
+                <td>{task.course_name}</td>
                 <td>{task.task_title}</td>
                 <td>{task.task_description}</td>
                 <td>{task.status}</td>

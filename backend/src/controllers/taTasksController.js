@@ -15,6 +15,7 @@ export const assignTask = async (req, res) => {
   .insert([{
     ta_id: req.body.ta_id,
     course_id: req.body.course_id,
+    
     professor_id: req.body.professor_id, // <- remove .id
     task_description: req.body.task_description,
     task_title: req.body.task_title,
@@ -43,15 +44,38 @@ export const getTATasks = async (req, res) => {
   const { taId } = req.params;
 
   const { data, error } = await supabase
-    .from('ta_tasks')
-    .select('id, course_id, task_title, task_description, status, due_date, created_at')
-    .eq('ta_id', taId)
-    .order('created_at', { ascending: false });
+    .from("ta_tasks")
+    .select(`
+      id,
+      task_title,
+      task_description,
+      due_date,
+      status,
+      subjects:course_id (
+        subject_name
+      )
+    `)
+    .eq("ta_id", Number(taId));
 
-  if (error) return res.status(500).json({ error: error.message });
 
-  res.json(data);
+  if (error) {
+    console.error("Error fetching TA tasks:", error);
+    return res.status(500).json(error);
+  }
+
+  res.json(
+    data.map(task => ({
+      ...task,
+      course_name: task.subjects?.subject_name || "Unknown"
+    }))
+  );
+  console.log("Fetching tasks for TA:", taId);
+console.log("Supabase data:", data);
+console.log("Supabase error:", error);
+
 };
+
+
 
 // Mark task as completed (TA)
 export const completeTask = async (req, res) => {
