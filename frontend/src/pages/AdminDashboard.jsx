@@ -15,7 +15,7 @@ function AdminDashboard() {
           <li onClick={() => navigate('/admin/dashboard')}>Dashboard</li>
           <li onClick={() => navigate('/students')}>Students</li>
           <li onClick={() => navigate('/courses')}>Courses</li>
-          <li onClick={() => navigate('/staff')}>Staff</li>
+          <li onClick={() => navigate('/admin/staff')}>Staff</li>
           <li onClick={() => navigate('/settings')}>Settings</li>
         </ul>
       </aside>

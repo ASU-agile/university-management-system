@@ -13,11 +13,17 @@ function StaffCourses() {
   useEffect(() => {
     const fetchStaffCourses = async () => {
       try {
-        // Get all subjects (you may want to filter by staff_id if you have that field)
-        const res = await api.get("/api/subjects");
-        setCourses(res.data || []);
-        // Store in localStorage for reference in other components
-        localStorage.setItem("staffCourses", JSON.stringify(res.data || []));
+        if (['staff', 'professor', 'teaching assistant'].includes(user?.role)) {
+          // Fetch only assigned subjects for this staff member
+          const res = await api.get(`/api/staff/${user.id}/subjects`);
+          setCourses(res.data || []);
+          localStorage.setItem("staffCourses", JSON.stringify(res.data || []));
+        } else {
+          // Admins or others see the full subjects list
+          const res = await api.get("/api/subjects");
+          setCourses(res.data || []);
+          localStorage.setItem("staffCourses", JSON.stringify(res.data || []));
+        }
       } catch (err) {
         console.error("Failed to fetch courses:", err);
       } finally {
@@ -29,39 +35,54 @@ function StaffCourses() {
   }, []);
 
   return (
-    <div style={{ padding: "20px" }}>
-      <header className="topbar">
-        <h2 className="welcome-message">
-          Welcome, {userName.charAt(0).toUpperCase() + userName.slice(1)}!
-        </h2>
-        <button
-          className="customize-button"
-          onClick={() => {
-            localStorage.removeItem("user");
-            window.location.href = "/";
-          }}
-        >
-          Logout
-        </button>
-      </header>
+    <div className="dashboard-container">
+      <aside className="sidebar">
+        <h2 className="sidebar-title">UMS</h2>
+        <ul>
+          <li onClick={() => navigate("/staffdashboard")}>Dashboard</li>
+          <li onClick={() => navigate("/staff/courses")}>My Courses</li>
+          <li onClick={() => navigate("/staff-profile", { state: { staff: user } })}>Office Hours</li>
+          <li>Training</li>
+          <li>Archive</li>
+          <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
+          <li>Settings</li>
+        </ul>
+      </aside>
 
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px" }}>
-        <h2>My Courses</h2>
-        <button
-          onClick={() => navigate("/addsubject")}
-          className="btn-primary"
-          style={{
-            padding: "10px 20px",
-            backgroundColor: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-          }}
-        >
-          + Create New Course
-        </button>
-      </div>
+      <main className="main-content">
+        <header className="topbar">
+          <h2 className="welcome-message">
+            Welcome, {userName.charAt(0).toUpperCase() + userName.slice(1)}!
+          </h2>
+          <button
+            className="customize-button"
+            onClick={() => {
+              localStorage.removeItem("user");
+              window.location.href = "/";
+            }}
+          >
+            Logout
+          </button>
+        </header>
+
+        <div style={{ padding: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "30px" }}>
+            <h2>My Courses</h2>
+            <button
+              onClick={() => navigate("/addsubject")}
+              className="btn-primary"
+              style={{
+                padding: "10px 20px",
+                backgroundColor: "#28a745",
+                color: "white",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              + Create New Course
+            </button>
+          </div>
 
       {loading ? (
         <p>Loading courses...</p>
@@ -139,6 +160,8 @@ function StaffCourses() {
           ))}
         </div>
       )}
+        </div>
+      </main>
     </div>
   );
 }

@@ -12,21 +12,9 @@ function Dashboard() {
   const navigate = useNavigate();
   const userRole = user?.role;
   return (
-    <div className="dashboard-content" style={{ padding: "20px" }}>
-      <header className="topbar">
-        <h2 className="welcome-message">
-          Welcome, {userName.charAt(0).toUpperCase() + userName.slice(1)}!
-        </h2>
-        <button
-          className="customize-button"
-          onClick={() => {
-            localStorage.removeItem('user');
-            window.location.href = '/';
-          }}
-        >
-          Logout
-        </button>
-      </header>
+    <div className="dashboard-container">
+      <Sidebar />
+
 
       <section>
         <h3>What do you want to do?</h3>

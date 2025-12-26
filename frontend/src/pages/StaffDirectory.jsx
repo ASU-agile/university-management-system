@@ -21,21 +21,53 @@ function StaffDirectory() {
     fetchStaff();
   }, []);
 
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const isAdmin = user?.role === "admin";
+
   return (
-    <div style={{ padding: "30px" }}>
-      <h2 style={{ marginBottom: "20px" }}>Staff Directory</h2>
+    <div className="dashboard-container">
+      <aside className="sidebar">
+        <h2 className="sidebar-title">UMS</h2>
+        <ul>
+          {isAdmin ? (
+            <>
+              <li onClick={() => navigate("/admin/dashboard")}>Dashboard</li>
+              <li onClick={() => navigate("/students")}>Students</li>
+              <li onClick={() => navigate("/courses")}>Courses</li>
+              <li onClick={() => navigate("/staff")}>Staff</li>
+              <li onClick={() => navigate("/settings")}>Settings</li>
+            </>
+          ) : (
+            <>
+              <li onClick={() => navigate("/staffdashboard")}>Dashboard</li>
+              <li onClick={() => navigate("/staff/courses")}>My Courses</li>
+              <li onClick={() => navigate("/staff-profile", { state: { staff: user } })}>Office Hours</li>
+              <li>Training</li>
+              <li>Archive</li>
+              <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
+              <li>Settings</li>
+            </>
+          )}
+        </ul>
+      </aside>
 
-      {staff.length === 0 && <p>No staff found.</p>}
+      <main className="main-content">
+        <div style={{ padding: "30px" }}>
+          <h2 style={{ marginBottom: "20px" }}>Staff Directory</h2>
 
-      {staff.map((person) => (
-        <div
-          key={person.id}
-          onClick={() => navigate("/staff-profile", { state: { staff: person } })}
-          style={{ cursor: "pointer", marginBottom: "15px" }}
-        >
-          <StaffCard staff={person} />
+          {staff.length === 0 && <p>No staff found.</p>}
+
+          {staff.map((person) => (
+            <div
+              key={person.id}
+              onClick={() => navigate("/staff-profile", { state: { staff: person } })}
+              style={{ cursor: "pointer", marginBottom: "15px" }}
+            >
+              <StaffCard staff={person} />
+            </div>
+          ))}
         </div>
-      ))}
+      </main>
     </div>
   );
 }

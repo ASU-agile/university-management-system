@@ -25,6 +25,7 @@ import StaffCourses from "./pages/StaffCourses";
 import StaffUploadContent from "./pages/StaffUploadContent";
 import StaffDirectory from "./pages/StaffDirectory";
 import StaffProfile from "./pages/StaffProfile";
+import StudentProfile from "./pages/StudentProfile";
 import SubmissionGrading from "./pages/SubmissionGrading";
 import TAResponsibilities from "./pages/TAResponsibilities";
 import AssignResponsibilities from "./pages/AssignResponsibilities";
@@ -80,6 +81,7 @@ function App() {
           <Route path="/admin/subjects/add" element={<AddSubjectForm />} />
           <Route path="/admin/subjects/edit" element={<EditSubjectForm />} />
           <Route path="/admin/rooms" element={<AdminRoomManager />} />
+          <Route path="/admin/staff" element={<StaffDirectory />} />
         </Route>
 
         {/* ================= LEGACY ROUTES (KEEP FOR PHASE 1) ================= */}
@@ -102,7 +104,9 @@ function App() {
         <Route path="/catalog" element={<CourseCatalog />} />
         <Route path="/course/:courseId/assignment/:assignmentId" element={<AssignmentSubmission />} />
         <Route path="/staff-directory" element={<StaffDirectory />} />
+        <Route path="/staff" element={<StaffDirectory />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
+        <Route path="/student-profile" element={<StudentProfile />} />
         <Route path="/course/:courseId/assignment/:assignmentId/grading" element={<SubmissionGrading />} />
 
 

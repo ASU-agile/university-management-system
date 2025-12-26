@@ -196,6 +196,7 @@ function StaffUploadContent() {
         <ul>
           <li onClick={() => navigate("/staffdashboard")}>Dashboard</li>
           <li onClick={() => navigate("/courses")}>My Courses</li>
+          <li onClick={() => navigate('/staff-profile', { state: { staff: user } })}>Office Hours</li>
           <li>Training</li>
           <li>Archive</li>
           <li onClick={() => navigate("/stafffacilities")}>Rooms</li>

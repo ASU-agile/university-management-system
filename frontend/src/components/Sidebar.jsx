@@ -26,10 +26,11 @@ export default function Sidebar() {
                 Responsibilities
               </li>
             )}
+            <li onClick={() => navigate("/staff-profile", { state: { staff: user } })}>Profile</li>
             <li onClick={() => navigate("/training")}>Training</li>
             <li onClick={() => navigate("/archive")}>Archive</li>
             <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
-            <li onClick={() => navigate("/settings")}>Settings</li>
+
           </>
         ) : (
           <>
@@ -40,7 +41,7 @@ export default function Sidebar() {
             <li onClick={() => navigate("/training")}>Training</li>
             <li onClick={() => navigate("/archive")}>Archive</li>
             <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
-            <li onClick={() => navigate("/settings")}>Settings</li>
+            <li onClick={() => navigate("/student-profile", { state: { user } })}>Profile</li>
           </>
         )}
       </ul>
