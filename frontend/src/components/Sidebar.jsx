@@ -16,6 +16,7 @@ export default function Sidebar() {
           <>
             <li onClick={() => navigate("/staff/dashboard")}>Dashboard</li>
             <li onClick={() => navigate("/staff/courses")}>My Courses</li>
+            <li onClick={() => navigate("/staff-profile", { state: { staff: user } })}>Office Hours</li>
             <li onClick={() => navigate("/training")}>Training</li>
             <li onClick={() => navigate("/archive")}>Archive</li>
             <li onClick={() => navigate("/stafffacilities")}>Rooms</li>
