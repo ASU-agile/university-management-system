@@ -50,6 +50,12 @@ router.post("/upload-content", upload.single("file"), async (req, res) => {
 
     const fileName = `${subject_id}_${Date.now()}_${req.file.originalname}`;
 
+    // Force deadline to be 11:59:59 PM if it's just a date string
+    let finalDeadline = assignment_deadline;
+    if (finalDeadline && finalDeadline.length === 10) { // YYYY-MM-DD is 10 chars
+      finalDeadline = `${finalDeadline} 23:59:59`;
+    }
+
     // Upload file to supabase storage using service role client
     const { error: uploadError } = await supabasePriv.storage
       .from("materials")
@@ -76,7 +82,7 @@ router.post("/upload-content", upload.single("file"), async (req, res) => {
             subject_id: parseInt(subject_id),
             professor_id: professor_id ? parseInt(professor_id) : null,
             title: assignment_title,
-            deadline: assignment_deadline,
+            deadline: finalDeadline,
           },
         ])
         .select();

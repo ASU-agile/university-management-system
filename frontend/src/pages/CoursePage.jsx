@@ -140,6 +140,28 @@ function CoursePage() {
                       Due: {new Date(a.deadline).toLocaleDateString()}
                     </p>
                   </div>
+
+                  {/* Grading Button for Staff */}
+                  {['professor', 'teaching assistant', 'admin', 'staff'].includes(JSON.parse(localStorage.getItem('user'))?.role) && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/course/${id}/assignment/${a.id}/grading`);
+                      }}
+                      style={{
+                        marginTop: "10px",
+                        padding: "5px 10px",
+                        fontSize: "12px",
+                        backgroundColor: "#17a2b8",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      Grade Submissions
+                    </button>
+                  )}
                   
                   {/* Show assignment materials below the assignment */}
                   {assignmentMaterials.length > 0 && (

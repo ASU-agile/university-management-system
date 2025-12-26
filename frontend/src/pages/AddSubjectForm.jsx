@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import SubjectForm from "../components/SubjectForm";
 import api from "../api/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import "./AddSubjectForm.css";
 
 function AddSubjectForm() {
   const [formKey, setFormKey] = useState(0);
@@ -19,31 +21,27 @@ function AddSubjectForm() {
   };
 
   return (
-    <div className="app-container" style={{ position: "relative" }}>
-      {/* Back to Dashboard Button at Top-Right */}
-      <button
-        type="button"
-        onClick={() => navigate("/admin/dashboard")}
-        style={{
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          background: "none",
-          border: "none",
-          color: "#007bff",
-          textDecoration: "underline",
-          cursor: "pointer",
-          fontSize: "16px",
-        }}
-      >
-        ← Back to Dashboard
-      </button>
+    <div className="add-subject-container">
+      <Sidebar />
+      
+      <main className="add-subject-main">
+        <header className="add-subject-header">
+          <h2>Create New Course</h2>
+          <button
+            className="back-dashboard-btn"
+            onClick={() => navigate("/admin/dashboard")}
+          >
+            &larr; Back to Dashboard
+          </button>
+        </header>
 
-      <h2 style={{ marginBottom: "20px" }}>Add New Subject</h2>
-      <SubjectForm
-        key={formKey} // ensures form resets after creation
-        onSubmit={handleFormSubmit}
-      />
+        <div className="form-card">
+          <SubjectForm
+            key={formKey} // ensures form resets after creation
+            onSubmit={handleFormSubmit}
+          />
+        </div>
+      </main>
     </div>
   );
 }
