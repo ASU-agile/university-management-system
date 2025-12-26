@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5000', // backend URL
+  baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000', // Use env var or default to local
 });
 
 // Set default JSON header for most requests, but allow FormData to override

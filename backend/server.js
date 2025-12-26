@@ -18,7 +18,15 @@ import announcementsRoutes from './src/routes/announcements.js';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Allow local vite dev server by default
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
