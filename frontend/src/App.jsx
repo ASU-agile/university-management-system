@@ -21,6 +21,10 @@ import StaffUploadContent from "./pages/StaffUploadContent";
 import StaffDirectory from "./pages/StaffDirectory";
 import StaffProfile from "./pages/StaffProfile";
 import SubmissionGrading from "./pages/SubmissionGrading";
+import TAResponsibilities from "./pages/TAResponsibilities";
+import AssignResponsibilities from "./pages/AssignResponsibilities";
+import DashboardLayout from "./layouts/DashboardLayout.jsx";
+
 
 function App() {
   return (
@@ -47,6 +51,12 @@ function App() {
         <Route path="/staff-directory" element={<StaffDirectory />} />
         <Route path="/staff-profile" element={<StaffProfile />} />
         <Route path="/course/:courseId/assignment/:assignmentId/grading" element={<SubmissionGrading />} />
+        <Route element={<DashboardLayout />}>
+        <Route path="/staff/responsibilities" element={<TAResponsibilities />} />
+        <Route path="/staff/assign-responsibilities" element={<AssignResponsibilities />} />
+      </Route>
+
+
 
       </Routes>
     </Router>
