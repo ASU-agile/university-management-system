@@ -23,6 +23,8 @@ import ViewRooms from "./pages/ViewRooms";
 import StaffDashboard from "./pages/StaffDashboard";
 import StaffCourses from "./pages/StaffCourses";
 import StaffUploadContent from "./pages/StaffUploadContent";
+import StaffDirectory from "./pages/StaffDirectory";
+import StaffProfile from "./pages/StaffProfile";
 
 /* ===== Admin Pages ===== */
 import AdminDashboard from "./pages/AdminDashboard";

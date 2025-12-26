@@ -20,7 +20,7 @@ function Login() {
       // 2️⃣ Redirect based on role
       if (data.user.role === 'admin') {
         navigate('/admin/dashboard');
-      } else if (data.user.role === 'staff') {
+      } else if (['staff', 'professor', 'teaching assistant'].includes(data.user.role)) {
         navigate('/staffdashboard');
       } else {
         navigate('/dashboard');
