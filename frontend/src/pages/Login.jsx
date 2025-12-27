@@ -12,7 +12,7 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axiosInstance.post('http://localhost:5000/auth/login', { email, password });
+      const { data } = await axiosInstance.post('/auth/login', { email, password });
 
       // 1️⃣ Store user in localStorage for persistent login
       localStorage.setItem('user', JSON.stringify(data.user));

@@ -1,5 +1,5 @@
 //frontend/src/pages/AdminRoomManager.jsx
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 import "./AdminRoomManager.css";
 import React, { useState, useEffect } from "react";
 
@@ -25,7 +25,7 @@ export default function AdminRoomManager() {
 
   const fetchRooms = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/admin-rooms");
+      const res = await axiosInstance.get("/api/admin-rooms");
       setRooms(res.data);
     } catch (err) {
       console.error(err);
@@ -39,7 +39,7 @@ export default function AdminRoomManager() {
 
   const handleAddRoom = async () => {
     try {
-      await axios.post("http://localhost:5000/api/admin-rooms", {
+      await axiosInstance.post("/api/admin-rooms", {
         ...form,
         floorNumber: parseInt(form.floorNumber),
         roomCapacity: parseInt(form.roomCapacity),
@@ -74,7 +74,7 @@ export default function AdminRoomManager() {
 
   const handleSaveEdit = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/admin-rooms/${currentRoom.id}`, form);
+      await axiosInstance.put(`/api/admin-rooms/${currentRoom.id}`, form);
       setShowEditModal(false);
       setCurrentRoom(null);
       setForm({
@@ -94,7 +94,7 @@ export default function AdminRoomManager() {
   const handleDeleteRoom = async (room) => {
     if (window.confirm("Are you sure you want to delete this room?")) {
       try {
-        await axios.delete(`http://localhost:5000/api/admin-rooms/${room.id}`);
+        await axiosInstance.delete(`/api/admin-rooms/${room.id}`);
         fetchRooms();
       } catch (err) {
         console.error(err);
