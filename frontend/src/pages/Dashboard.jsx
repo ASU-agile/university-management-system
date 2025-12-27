@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CourseCard from '../components/CourseCard';
 import { useNavigate } from 'react-router-dom';
+import Sidebar from "../components/Sidebar";
 
 
 function Dashboard() {
@@ -10,18 +11,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <aside className="sidebar">
-        <h2 className="sidebar-title">UMS</h2>
-        <ul>
-          <li onClick={() => navigate('/dashboard')}>Dashboard</li>
-          <li onClick={() => navigate('/studentcourses')}>Courses</li>
-          <li>Training</li>
-          <li>Archive</li>
-          <li onClick={() => navigate('/stafffacilities')}>Rooms</li>
-          <li>Fees</li>
-          <li>Settings</li>
-        </ul>
-      </aside>
+      <Sidebar />
 
       <main className="main-content">
         <header className="topbar">

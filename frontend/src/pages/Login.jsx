@@ -1,8 +1,7 @@
-
+//frontend/src/pages/Login
 import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
 import React, { useState, useEffect } from "react";
-
 
 function Login() {
   const navigate = useNavigate();
@@ -19,21 +18,20 @@ function Login() {
     // Store user in localStorage for persistent login
     localStorage.setItem('user', JSON.stringify(data.user));
 
-    // Redirect based on role
-    if (data.user.role === 'admin') {
-      navigate('/admin/dashboard');
-    } else if (data.user.role === 'staff') {
-      navigate('/staffdashboard');
-    } else {
-      navigate('/dashboard');
+      // 2️⃣ Redirect based on role
+      if (data.user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else if (['staff', 'professor', 'teaching assistant'].includes(data.user.role)) {
+        navigate('/staffdashboard');
+      } else {
+        navigate('/dashboard');
+      }
+
+    } catch (err) {
+      setMessage('Login failed');
+      console.error('Login error:', err);
     }
-
-  } catch (err) {
-    setMessage('Login failed');
-    console.error('Login error:', err);
-  }
-};
-
+  };
 
   return (
     <div className="app-container">

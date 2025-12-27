@@ -15,7 +15,7 @@ function AdminDashboard() {
           <li onClick={() => navigate('/admin/dashboard')}>Dashboard</li>
           <li onClick={() => navigate('/students')}>Students</li>
           <li onClick={() => navigate('/courses')}>Courses</li>
-          <li onClick={() => navigate('/staff')}>Staff</li>
+          <li onClick={() => navigate('/admin/staff')}>Staff</li>
           <li onClick={() => navigate('/settings')}>Settings</li>
         </ul>
       </aside>
@@ -45,10 +45,10 @@ function AdminDashboard() {
               <p>Create and manage user accounts.</p>
             </div>
 
-            <div className="action-card" onClick={() => navigate('/courses')}>
+            <div className="action-card" onClick={() => navigate('/add-subject')}>
               <span className="icon">🎓</span>
               <h4>Add classes</h4>
-              <p>Create course content for your students.</p>
+              <p>Create new courses</p>
             </div>
 
             <div className="action-card" onClick={() => navigate('/adminfacilities')}>

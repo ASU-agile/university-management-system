@@ -280,3 +280,175 @@ form p {
   display: block;
   margin-bottom: 10px;
 }
+
+.course-page-container {
+  display: flex;
+  min-height: 100vh;
+}
+.course-main-content {
+  flex: 1;
+  padding: 30px;
+  background-color: #f4f6f8;
+  margin-left: 230px;
+}
+
+.materials-section {
+  display: grid;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+
+.course-sections {
+  margin-top: 20px;
+}
+
+.course-section {
+  margin-bottom: 30px;
+}
+
+.material-card {
+  padding: 10px 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 8px;
+}
+
+.material-card a {
+  text-decoration: none;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;   /* fill vertical space */
+  width: 100vw;        /* fill horizontal space */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.main-content {
+  margin-left: 230px; /* width of sidebar */
+  padding: 20px;
+}
+
+.course-card {
+  width: 220px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.course-card button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #007bff;
+  color: white;
+}
+
+.course-card button:disabled {
+  background: #777;
+}
+
+/* == LAYOUT ===================================== */
+
+.page-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.content {
+  margin-left: 230px; /* match sidebar width */
+  padding: 30px;
+  width: calc(100% - 230px);
+}
+
+/* == CATALOG GRID ============================== */
+
+.catalog-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.catalog-card {
+  width: 250px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: 0.2s;
+}
+
+.catalog-card:hover {
+  transform: translateY(-4px);
+}
+
+/* == BUTTONS =================================== */
+
+.register-btn {
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.register-btn:hover {
+  background-color: #005fcc;
+}
+
+.registered-btn {
+  padding: 8px 12px;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: not-allowed;
+}
+
+/* Layout container */
+.layout-container {
+  display: flex;
+ 
+  min-height: 100vh;   /* fill vertical space */
+  width: 100vw;        /* fill horizontal space */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+/* Main content area */
+.layout-content {
+  margin-left: 230px;       /* match sidebar width */
+  padding: 30px;
+  width: calc(100% - 230px);
+  background-color: #f6f8fc; /* nice light background */
+  min-height: 100vh;
+}
+
+.layout-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.layout-content {
+  margin-left: 230px; /* must match Sidebar width */
+  padding: 30px;
+  width: calc(100% - 230px);
+  background-color: #f6f8fc;
+  min-height: 100vh;
+}
+

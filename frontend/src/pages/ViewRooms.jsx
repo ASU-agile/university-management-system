@@ -1,6 +1,7 @@
 //frontend/src/pages/ViewRooms.jsx
 import React, { useEffect, useState } from "react";
 import { getRooms, bookRoom } from "../api/rooms";
+import Sidebar from "../components/Sidebar";
 
 const ViewRooms = () => {
   const [rooms, setRooms] = useState([]);
@@ -62,6 +63,11 @@ const ViewRooms = () => {
   if (loading) return <p>Loading rooms...</p>;
 
   return (
+     <div className="dashboard-container">
+    <Sidebar />
+   <main className="main-content">
+      {
+    
     <div className="App-header">
       {/* Navigation */}
       <nav>
@@ -143,6 +149,8 @@ const ViewRooms = () => {
           </tbody>
         </table>
       </div>
+    </div>}
+    </main>
     </div>
   );
 };

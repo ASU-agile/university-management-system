@@ -56,7 +56,7 @@ npm run dev
 ```
 You should get a local URL like:
 ```
-http://localhost:15731
+http://localhost:5731
 ```
 Open it in your browser.
 
