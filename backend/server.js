@@ -29,13 +29,12 @@ const corsOptions = {
     if (
       !requestOrigin ||
       requestOrigin.startsWith("http://localhost:") ||
-      requestOrigin === frontendUrl
+      requestOrigin === frontendUrl ||
+      requestOrigin.endsWith(".vercel.app")
     ) {
       callback(null, true);
     } else {
-      console.warn(`CORS BLOCKED: ${requestOrigin} is not in [${frontendUrl}, localhost]`);
-      // For discovery phase, you could temporarily callback(null, true) 
-      // but it's better to log it so we know what they are using.
+      console.warn(`CORS BLOCKED: ${requestOrigin} is not in [${frontendUrl}, localhost, *.vercel.app]`);
       callback(new Error("Not allowed by CORS"));
     }
   },
