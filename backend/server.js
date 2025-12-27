@@ -21,11 +21,21 @@ const app = express();
 
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow any localhost port for development ease
-    if (!origin || origin.startsWith("http://localhost:") || origin === process.env.FRONTEND_URL) {
+    const frontendUrl = (process.env.FRONTEND_URL || "").replace(/\/$/, ""); // Remove trailing slash
+    const requestOrigin = (origin || "").replace(/\/$/, ""); // Remove trailing slash
+
+    console.log(`CORS check: origin=${requestOrigin}, allowed=${frontendUrl}`);
+
+    if (
+      !requestOrigin ||
+      requestOrigin.startsWith("http://localhost:") ||
+      requestOrigin === frontendUrl
+    ) {
       callback(null, true);
     } else {
-      console.warn(`CORS blocked for origin: ${origin}`);
+      console.warn(`CORS BLOCKED: ${requestOrigin} is not in [${frontendUrl}, localhost]`);
+      // For discovery phase, you could temporarily callback(null, true) 
+      // but it's better to log it so we know what they are using.
       callback(new Error("Not allowed by CORS"));
     }
   },

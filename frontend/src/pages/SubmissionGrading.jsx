@@ -171,7 +171,7 @@ function SubmissionGrading() {
                         </td>
                         <td>
                           <a
-                            href={`https://wlzboctpseaptffewrzb.supabase.co/storage/v1/object/public/submissions/${sub.file_path}`}
+                            href={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/submissions/${sub.file_path}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="file-link"

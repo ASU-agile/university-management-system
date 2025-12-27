@@ -128,7 +128,7 @@ function AssignmentSubmission() {
                             {assignment.file_path && (
                                 <div className="pdf-preview">
                                     <iframe
-                                        src={`https://wlzboctpseaptffewrzb.supabase.co/storage/v1/object/public/materials/${assignment.file_path}`}
+                                        src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/materials/${assignment.file_path}`}
                                         width="100%"
                                         height="500px"
                                         title="Assignment PDF"

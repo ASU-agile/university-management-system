@@ -424,7 +424,7 @@ function StaffUploadContent() {
                     </div>
                     <div className="material-actions">
                       <a
-                        href={`https://wlzboctpseaptffewrzb.supabase.co/storage/v1/object/public/materials/${mat.file_path}`}
+                        href={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/materials/${mat.file_path}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn-view"
