@@ -20,7 +20,15 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Allow local vite dev server by default
+  origin: (origin, callback) => {
+    // Allow any localhost port for development ease
+    if (!origin || origin.startsWith("http://localhost:") || origin === process.env.FRONTEND_URL) {
+      callback(null, true);
+    } else {
+      console.warn(`CORS blocked for origin: ${origin}`);
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
