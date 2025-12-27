@@ -1,8 +1,17 @@
 //frontend/src/api/axiosInstance.js
 import axios from 'axios';
 
+let apiURL = import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
+// Ensure protocol is present to avoid relative path resolution
+if (apiURL && !apiURL.startsWith('http://') && !apiURL.startsWith('https://')) {
+  apiURL = `https://${apiURL}`;
+}
+
+console.log('API Base URL:', apiURL);
+
 const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000',
+  baseURL: apiURL,
 });
 
 // Set default JSON header for most requests, but allow FormData to override
